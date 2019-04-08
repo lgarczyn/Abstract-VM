@@ -11,31 +11,28 @@ OperationToken *Lexer::readLine(std::string &line)
 	char operand_type[30];
 	bool has_value = true;
 	bool has_operator = true;
-	int read_chars;
+	int read_chars = 0;
 	int read_tokens;
 
 	// Reading "Operator Type(Value)" format
 	read_tokens = sscanf(line.c_str(), "%30[a-z] %30[a-z0-9](%30[0-9.Ee+-])%n", operator_name, operand_type, operand_data, &read_chars);
-	std::cout << "attempting first: " << read_tokens << " " << read_chars << std::endl;
 
 	// If failed, attempt "Operator" format
 	if (read_tokens != 3)
 	{
-		
 		has_value = false;
 		read_tokens = sscanf(line.c_str(), "%30[a-z]%n", operator_name, &read_chars);
-		
-		std::cout << "attempting second: " << read_tokens << " " << read_chars << std::endl;
 		
 		if (read_tokens != 1)
 		{
 			has_operator = false;
 		}
 	}
+	std::cout << "read_chars: " << read_chars << std::endl;
 
 	// Check for remaining characters
 	size_t i = read_chars;
-	while (line[i] && line[i] != ';' && line[i] != '\n')
+	while (line[i] && line[i] != ';')
 	{
 		if (line[i] != ' ')
 		{
