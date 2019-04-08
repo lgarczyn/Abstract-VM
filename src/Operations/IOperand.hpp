@@ -19,7 +19,7 @@ struct OperandInfo
 class IOperand {
 	public:
 	// List of operand types and associated info
-	static const OperandInfo Operands[OPERAND_TYPE_NUM];
+	static const OperandInfo operands[OPERAND_TYPE_NUM];
 	// Precision of the type of the instance
 	virtual int getPrecision( void ) const = 0;
 	// Type of the instance

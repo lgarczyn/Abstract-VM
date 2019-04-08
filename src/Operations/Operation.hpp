@@ -42,9 +42,9 @@ class Operation
 	eOperationType _type;
 	const IOperand *_operand;
 
+  public:
 	static const OperationInfo operations[OPERATION_TYPE_NUM];
 
-  public:
 	Operation() : _type(), _operand() {}
 	Operation(eOperationType type, const IOperand *operand) : _type(type), _operand(operand) {}
 	Operation(const Operation &cpy) : _type(cpy._type), _operand(cpy._operand) {}
