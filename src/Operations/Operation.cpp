@@ -46,7 +46,7 @@ void Operation::op_dump(Stack &stack)
 {
 	for (auto it = stack.rbegin(); it != stack.rend(); it++)
 	{
-		std::cout << (*it)->toString() << std::endl;
+		std::cout << IOperand::operands[(*it)->getType()].name << " " << (*it)->toString() << std::endl;
 	}
 }
 
