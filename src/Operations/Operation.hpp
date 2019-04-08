@@ -63,7 +63,7 @@ class Operation
 		if (info.takes_value && this->_operand == NULL)
 			throw std::logic_error(std::string("No operand was passed to operation: ") + info.name);
 
-		if (info.required_operands > stack.size())
+		if ((size_t)info.required_operands > stack.size())
 			throw std::logic_error(std::string("Stack too small on operation: ") + info.name);
 
 		(this->*(info.method))(stack);
@@ -168,5 +168,8 @@ class Operation
 	}
 
 	// Terminate the execution of the current program. If this instruction does notappears while all others instruction has been processed, the execution must stop with an error
-	void op_exit(Stack &stack) {}
+	void op_exit(Stack &stack)
+	{
+		(void)stack;
+	}
 };
