@@ -16,16 +16,10 @@ struct OperandInfo
 	const char *name;
 };
 
-OperandInfo Operands[OPERAND_TYPE_NUM] = {
-	{e_ty_i8, "int8"},
-	{e_ty_i16, "int16"},
-	{e_ty_i32, "int32"},
-	{e_ty_f32, "float"},
-	{e_ty_f64, "double"},
-};
-
 class IOperand {
 	public:
+	// List of operand types and associated info
+	static const OperandInfo Operands[OPERAND_TYPE_NUM];
 	// Precision of the type of the instance
 	virtual int getPrecision( void ) const = 0;
 	// Type of the instance

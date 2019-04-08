@@ -42,7 +42,7 @@ class Operation
 	eOperationType _type;
 	const IOperand *_operand;
 
-	const static OperationInfo operations[OPERATION_TYPE_NUM];
+	static const OperationInfo operations[OPERATION_TYPE_NUM];
 
   public:
 	Operation() : _type(), _operand() {}

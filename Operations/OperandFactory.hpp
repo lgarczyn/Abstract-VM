@@ -7,7 +7,7 @@ typedef const IOperand * (OperandFactory::*OperandConstructor)(std::string const
 
 class OperandFactory {
 private:
-	static OperandConstructor constructors[OPERAND_TYPE_NUM];
+	static const OperandConstructor constructors[OPERAND_TYPE_NUM];
 public:
 	IOperand const * createOperand( eOperandType type, std::string const & value ) const;
 	IOperand const * createInt8( std::string const & value ) const;

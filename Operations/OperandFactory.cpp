@@ -1,7 +1,7 @@
 #include "OperandFactory.hpp"
 #include "Operand.hpp"
 
-OperandConstructor OperandFactory::constructors[OPERAND_TYPE_NUM] = {
+const OperandConstructor OperandFactory::constructors[OPERAND_TYPE_NUM] = {
 	&OperandFactory::createInt8,
 	&OperandFactory::createInt16,
 	&OperandFactory::createInt32,
