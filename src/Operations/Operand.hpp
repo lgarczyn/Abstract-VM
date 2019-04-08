@@ -2,6 +2,8 @@
 #include <string>
 #include "IOperand.hpp"
 #include <cmath>
+#include <sstream>
+#include <iomanip>
 
 template <typename T>
 class Operand: public IOperand {
@@ -12,8 +14,13 @@ private:
 	std::string representation;
 
 public:
-	Operand(T value) : value(value), representation(std::to_string(value)) {}
-
+	Operand(T value) : value(value)
+	{
+		int precision = std::numeric_limits<T>::max_digits10 - 2;
+		std::stringstream ss;
+		ss << std::setprecision(precision) << +value;
+		representation = ss.str();
+	}
 	int getPrecision( void ) const {
 		return static_cast<int>(type);
 	}
