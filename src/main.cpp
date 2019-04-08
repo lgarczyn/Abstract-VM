@@ -4,7 +4,7 @@
 #include <stack>
 #include "Parsing/Lexer.hpp"
 #include "Operations/Operation.hpp"
-//#include "Parsing/Parser.hpp"
+#include "Parsing/Parser.hpp"
 
 void run(char *file)
 {
@@ -13,22 +13,24 @@ void run(char *file)
 	f.open(file);
 
 	Lexer lexer = Lexer();
-	//Parser parser = Parser();
+	Parser parser = Parser();
 	auto stack = Stack();
+	size_t line_counter = 0;
 
 	while (std::getline(f, line))
 	{
+		line_counter++;
 		std::cout << line << std::endl;
 		auto operation_token = lexer.readLine(line);
 		if (operation_token)
 		{
 			std::cout << operation_token->operator_name << " " << operation_token->has_value << " " << operation_token->operand_type << " " << operation_token->operand_data << std::endl;
-			//auto operation = parser.getOperation(*operation_token);
-			//delete operation_token;
-			//if (operation.run(stack))
-			//{
-			//	break;
-			//}
+			auto operation = parser.getOperation(*operation_token);
+			delete operation_token;
+			if (operation.run(stack))
+			{
+				break;
+			}
 		}
 	}
 }
