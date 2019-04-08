@@ -1,12 +1,12 @@
 #include "Operand.hpp"
 
 template<>
-const eOperandType Operand<int8_t>::type = i8;
+const eOperandType Operand<int8_t>::type = e_ty_i8;
 template<>
-const eOperandType Operand<int16_t>::type = i16;
+const eOperandType Operand<int16_t>::type = e_ty_i16;
 template<>
-const eOperandType Operand<int32_t>::type = i32;
+const eOperandType Operand<int32_t>::type = e_ty_i32;
 template<>
-const eOperandType Operand<float>::type = f32;
+const eOperandType Operand<float>::type = e_ty_f32;
 template<>
-const eOperandType Operand<double>::type = f64;
+const eOperandType Operand<double>::type = e_ty_f64;

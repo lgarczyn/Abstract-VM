@@ -29,10 +29,11 @@ public:
 	IOperand const *operator+( IOperand const& rhs ) const {
 		int precision = this->getMaxPrecision(rhs);
 		switch (precision) {
-			case i16: return new Operand(this->asI16() + rhs.asI16());
-			case i32: return new Operand(this->asI32() + rhs.asI32());
-			case f32: return new Operand(this->asF32() + rhs.asF32());
-			case f64: return new Operand(this->asF64() + rhs.asF64());
+			case e_ty_i8: return new Operand(this->asI8() + rhs.asI8());
+			case e_ty_i16: return new Operand(this->asI16() + rhs.asI16());
+			case e_ty_i32: return new Operand(this->asI32() + rhs.asI32());
+			case e_ty_f32: return new Operand(this->asF32() + rhs.asF32());
+			case e_ty_f64: return new Operand(this->asF64() + rhs.asF64());
 		}
 		throw std::logic_error("bad type");
 	}
@@ -40,10 +41,11 @@ public:
 	IOperand const *operator-( IOperand const& rhs ) const {
 		int precision = this->getMaxPrecision(rhs);
 		switch (precision) {
-			case i16: return new Operand(this->asI16() - rhs.asI16());
-			case i32: return new Operand(this->asI32() - rhs.asI32());
-			case f32: return new Operand(this->asF32() - rhs.asF32());
-			case f64: return new Operand(this->asF64() - rhs.asF64());
+			case e_ty_i8: return new Operand(this->asI8() - rhs.asI8());
+			case e_ty_i16: return new Operand(this->asI16() - rhs.asI16());
+			case e_ty_i32: return new Operand(this->asI32() - rhs.asI32());
+			case e_ty_f32: return new Operand(this->asF32() - rhs.asF32());
+			case e_ty_f64: return new Operand(this->asF64() - rhs.asF64());
 		}
 		throw std::logic_error("bad type");
 	}
@@ -51,10 +53,11 @@ public:
 	IOperand const *operator*( IOperand const& rhs ) const {
 		int precision = this->getMaxPrecision(rhs);
 		switch (precision) {
-			case i16: return new Operand(this->asI16() * rhs.asI16());
-			case i32: return new Operand(this->asI32() * rhs.asI32());
-			case f32: return new Operand(this->asF32() * rhs.asF32());
-			case f64: return new Operand(this->asF64() * rhs.asF64());
+			case e_ty_i8: return new Operand(this->asI8() * rhs.asI8());
+			case e_ty_i16: return new Operand(this->asI16() * rhs.asI16());
+			case e_ty_i32: return new Operand(this->asI32() * rhs.asI32());
+			case e_ty_f32: return new Operand(this->asF32() * rhs.asF32());
+			case e_ty_f64: return new Operand(this->asF64() * rhs.asF64());
 		}
 		throw std::logic_error("bad type");
 	}
@@ -62,10 +65,11 @@ public:
 	IOperand const *operator/( IOperand const& rhs ) const {
 		int precision = this->getMaxPrecision(rhs);
 		switch (precision) {
-			case i16: return new Operand(this->asI16() / rhs.asI16());
-			case i32: return new Operand(this->asI32() / rhs.asI32());
-			case f32: return new Operand(this->asF32() / rhs.asF32());
-			case f64: return new Operand(this->asF64() / rhs.asF64());
+			case e_ty_i8: return new Operand(this->asI8() / rhs.asI8());
+			case e_ty_i16: return new Operand(this->asI16() / rhs.asI16());
+			case e_ty_i32: return new Operand(this->asI32() / rhs.asI32());
+			case e_ty_f32: return new Operand(this->asF32() / rhs.asF32());
+			case e_ty_f64: return new Operand(this->asF64() / rhs.asF64());
 		}
 		throw std::logic_error("bad type");
 	}
@@ -73,10 +77,11 @@ public:
 	IOperand const *operator%( IOperand const& rhs ) const {
 		int precision = this->getMaxPrecision(rhs);
 		switch (precision) {
-			case i16: return new Operand(this->asI16() % rhs.asI16());
-			case i32: return new Operand(this->asI32() % rhs.asI32());
-			case f32: return new Operand(std::fmodf(this->asF32(), rhs.asF32()));
-			case f64: return new Operand(std::fmod(this->asF64(), rhs.asF64()));
+			case e_ty_i8: return new Operand(this->asI8() % rhs.asI8());
+			case e_ty_i16: return new Operand(this->asI16() % rhs.asI16());
+			case e_ty_i32: return new Operand(this->asI32() % rhs.asI32());
+			case e_ty_f32: return new Operand(std::fmodf(this->asF32(), rhs.asF32()));
+			case e_ty_f64: return new Operand(std::fmod(this->asF64(), rhs.asF64()));
 		}
 		throw std::logic_error("bad type");
 	}

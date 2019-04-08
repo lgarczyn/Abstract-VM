@@ -2,12 +2,26 @@
 #include <string>
 
 enum eOperandType {
-	i8 = 0,
-	i16 = 1,
-	i32 = 2,
-	f32 = 3,
-	f64 = 4,
+	e_ty_i8 = 0,
+	e_ty_i16 = 1,
+	e_ty_i32 = 2,
+	e_ty_f32 = 3,
+	e_ty_f64 = 4,
 	OPERAND_TYPE_NUM = 5,
+};
+
+struct OperandInfo
+{
+	eOperandType type;
+	const char *name;
+};
+
+OperandInfo Operands[OPERAND_TYPE_NUM] = {
+	{e_ty_i8, "int8"},
+	{e_ty_i16, "int16"},
+	{e_ty_i32, "int32"},
+	{e_ty_f32, "float"},
+	{e_ty_f64, "double"},
 };
 
 class IOperand {
