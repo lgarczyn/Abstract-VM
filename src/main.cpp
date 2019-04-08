@@ -12,6 +12,9 @@ void run(char *file)
 	std::string line;
 	f.open(file);
 
+	if (f.is_open() == false)
+		throw std::logic_error(std::string("Could not open file: ") + file);
+
 	Lexer lexer = Lexer();
 	Parser parser = Parser();
 	auto stack = Stack();
@@ -27,7 +30,6 @@ void run(char *file)
 		{
 			if (exited)
 				throw std::logic_error("Operations attempted after exit");
-			std::cout << operation_token->operator_name << " " << operation_token->has_value << " " << operation_token->operand_type << " " << operation_token->operand_data << std::endl;
 			auto operation = parser.getOperation(*operation_token);
 			delete operation_token;
 			if (operation.run(stack))

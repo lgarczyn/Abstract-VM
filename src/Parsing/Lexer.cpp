@@ -28,7 +28,6 @@ OperationToken *Lexer::readLine(std::string &line)
 			has_operator = false;
 		}
 	}
-	std::cout << "read_chars: " << read_chars << std::endl;
 
 	// Check for remaining characters
 	size_t i = read_chars;
