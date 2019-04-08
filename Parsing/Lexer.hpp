@@ -13,6 +13,6 @@ class Lexer
 {
 	public:
 	OperationToken *readLine(std::string &line);
-	Lexer();
-	~Lexer();
+	Lexer() {};
+	~Lexer() {};
 };

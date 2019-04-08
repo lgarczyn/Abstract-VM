@@ -9,23 +9,27 @@ OperationToken *Lexer::readLine(std::string &line)
 	char operator_name[30];
 	char operand_data[30];
 	char operand_type[30];
-	bool read_value = true;
-	bool read_operator = true;
+	bool has_value = true;
+	bool has_operator = true;
 	int read_chars;
 	int read_tokens;
 
 	// Reading "Operator Type(Value)" format
-	read_tokens = sscanf(line.c_str(), "%30[a-z] %30[a-z0-9](%30[a-z.Ee+-])%n", operator_name, operand_type, operand_data, &read_chars);
+	read_tokens = sscanf(line.c_str(), "%30[a-z] %30[a-z0-9](%30[0-9.Ee+-])%n", operator_name, operand_type, operand_data, &read_chars);
+	std::cout << "attempting first: " << read_tokens << " " << read_chars << std::endl;
 
 	// If failed, attempt "Operator" format
 	if (read_tokens != 3)
 	{
-		read_value = false;
+		
+		has_value = false;
 		read_tokens = sscanf(line.c_str(), "%30[a-z]%n", operator_name, &read_chars);
-
+		
+		std::cout << "attempting second: " << read_tokens << " " << read_chars << std::endl;
+		
 		if (read_tokens != 1)
 		{
-			read_operator = false;
+			has_operator = false;
 		}
 	}
 
@@ -41,18 +45,19 @@ OperationToken *Lexer::readLine(std::string &line)
 				"\n Unexpected character: " +
 				line[i]);
 		}
+		i++;
 	}
 	// Skip empty lines
-	if (read_operator == false)
+	if (has_operator == false)
 		return NULL;
 
 	// Build Token
 	OperationToken *token = new OperationToken();
 
 	token->operator_name = std::string(operator_name);
-	token->has_value = read_value;
+	token->has_value = has_value;
 
-	if (read_value)
+	if (has_value)
 	{
 		token->operand_type = std::string(operand_type);
 		token->operand_data = std::string(operand_data);
