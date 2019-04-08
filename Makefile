@@ -22,6 +22,7 @@ SRCS_NAME = main.cpp \
 			Operations/OperandFactory.cpp \
 			Operations/Operation.cpp \
 			Parsing/Lexer.cpp \
+			Parsing/Parser.cpp \
 
 SRCS = $(addprefix $(SRCS_PATH), $(SRCS_NAME))
 OBJ = $(addprefix $(OBJ_PATH), $(SRCS_NAME:.cpp=.o))

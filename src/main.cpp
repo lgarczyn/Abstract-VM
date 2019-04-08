@@ -16,6 +16,7 @@ void run(char *file)
 	Parser parser = Parser();
 	auto stack = Stack();
 	size_t line_counter = 0;
+	bool exited = false;
 
 	while (std::getline(f, line))
 	{
@@ -24,12 +25,14 @@ void run(char *file)
 		auto operation_token = lexer.readLine(line);
 		if (operation_token)
 		{
+			if (exited)
+				throw std::logic_error("Operations attempted after exit");
 			std::cout << operation_token->operator_name << " " << operation_token->has_value << " " << operation_token->operand_type << " " << operation_token->operand_data << std::endl;
 			auto operation = parser.getOperation(*operation_token);
 			delete operation_token;
 			if (operation.run(stack))
 			{
-				break;
+				exited = true;
 			}
 		}
 	}
