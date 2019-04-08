@@ -24,15 +24,24 @@ SRCS_NAME = main.cpp \
 			Parsing/Lexer.cpp \
 			Parsing/Parser.cpp \
 
+HEADERS_NAME = \
+		Operations/IOperand.hpp \
+		Operations/Operand.hpp \
+		Operations/OperandFactory.hpp \
+		Operations/Operation.hpp \
+		Parsing/Lexer.hpp \
+		Parsing/Parser.hpp \
+
 SRCS = $(addprefix $(SRCS_PATH), $(SRCS_NAME))
 OBJ = $(addprefix $(OBJ_PATH), $(SRCS_NAME:.cpp=.o))
+HEADERS = $(addprefix $(SRCS_PATH), $(HEADERS_NAME))
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(HEADERS)
 	@g++ $(FLAGS) $(OBJ) -o $(NAME)
 
-$(OBJ_PATH)%.o: $(SRCS_PATH)%.cpp
+$(OBJ_PATH)%.o: $(SRCS_PATH)%.cpp $(HEADERS)
 	@mkdir -p `dirname $@`
 	@g++ -c $(FLAGS) $< -o $@
 
