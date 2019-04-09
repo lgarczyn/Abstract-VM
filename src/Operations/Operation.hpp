@@ -30,7 +30,7 @@ typedef void (Operation::*OperationMethod)(Stack &stack);
 struct OperationInfo
 {
 	eOperationType type;
-	const char *name;
+	std::string name;
 	bool takes_value;
 	int required_operands;
 	OperationMethod method;

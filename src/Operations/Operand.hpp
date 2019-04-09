@@ -4,6 +4,7 @@
 #include <cmath>
 #include <sstream>
 #include <iomanip>
+#include <iostream>
 
 template <typename T>
 class Operand: public IOperand {
@@ -27,10 +28,14 @@ public:
 
 	int getMaxPrecision( IOperand const& rhs ) const {
 		return std::max(this->getPrecision(), rhs.getPrecision());
-	} 
-	
+	}
+
 	eOperandType getType( void ) const {
 		return type;
+	}
+	
+	const std::string &getTypeName( void ) const {
+		return IOperand::operands[type].name;
 	}
 
 	bool isZero( void ) const {
@@ -98,6 +103,7 @@ public:
 	}
 	
 	bool operator==( IOperand const& rhs ) const {
+		std::cout << this->asF64() << "==" << rhs.asF64() << std::endl;
 		int precision = this->getMaxPrecision(rhs);
 		switch (precision) {
 			case e_ty_i8: return this->asI8() == rhs.asI8();
@@ -108,7 +114,11 @@ public:
 		}
 		throw std::logic_error("bad type");
 	}
-	
+
+	bool operator!=( IOperand const& rhs ) const {
+		return !(*this == rhs);
+	}
+
 	std::string const &toString( void ) const {
 		return this->representation;
 	}

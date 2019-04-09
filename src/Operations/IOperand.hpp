@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <ostream>
 
 enum eOperandType {
 	e_ty_i8 = 0,
@@ -13,7 +14,7 @@ enum eOperandType {
 struct OperandInfo
 {
 	eOperandType type;
-	const char *name;
+	const std::string name;
 };
 
 class IOperand {
@@ -24,6 +25,8 @@ class IOperand {
 	virtual int getPrecision( void ) const = 0;
 	// Type of the instance
 	virtual eOperandType getType( void ) const = 0;
+	// String representation of the type of the instance
+	virtual std::string const &getTypeName( void ) const = 0;
 	// Sum
 	virtual IOperand const *operator+( IOperand const & rhs ) const = 0;
 	// Difference
@@ -36,6 +39,7 @@ class IOperand {
 	virtual IOperand const *operator%( IOperand const & rhs ) const = 0;
 	// Equality
 	virtual bool operator==( IOperand const & rhs ) const = 0;
+	virtual bool operator!=( IOperand const & rhs ) const = 0;
 	// String representation of the instance
 	virtual std::string const &toString( void ) const = 0;
 
@@ -48,3 +52,5 @@ class IOperand {
 
 	~IOperand( void ) {}
 };
+
+std::ostream &operator<<(std::ostream &out, const IOperand &rhs);

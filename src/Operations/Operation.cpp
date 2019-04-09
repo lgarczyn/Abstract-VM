@@ -46,17 +46,23 @@ void Operation::op_dump(Stack &stack)
 {
 	for (auto it = stack.rbegin(); it != stack.rend(); it++)
 	{
-		std::cout << IOperand::operands[(*it)->getType()].name << " " << (*it)->toString() << std::endl;
+		std::cout << (*it)->getTypeName() << " " << *it << std::endl;
 	}
 }
 
 // Asserts that the value at the top of the stack is equal to the one passedas parameter for this instruction. If it is not the case, the program execution muststop with an error. The valuevhas the same form that those passed as parametersto the instructionpush.
 void Operation::op_assert(Stack &stack)
 {
-	if (stack.back() != this->_operand)
+	if (stack.back()->getType() != this->_operand->getType())
 	{
 		std::stringstream ss;
-		ss << "Failed assert: " << this->_operand << " != " << stack.back();
+		ss << "Failed assert: " << this->_operand->getTypeName() << " != " << stack.back()->getTypeName();
+		throw std::logic_error(ss.str());
+	}
+	if (*stack.back() != *this->_operand)
+	{
+		std::stringstream ss;
+		ss << "Failed assert: " << *this->_operand << " != " << *stack.back();
 		throw std::logic_error(ss.str());
 	}
 }
@@ -82,7 +88,7 @@ void Operation::op_sub(Stack &stack)
 	auto b = stack.back();
 	stack.pop_back();
 
-	stack.push_back(*a - *b);
+	stack.push_back(*b - *a);
 }
 
 // Unstacks the first two values on the stack, multiplies them, then stacks theresult. If the number of values on the stack is strictly inferior to 2, the programexecution must stop with an error.4
@@ -104,10 +110,10 @@ void Operation::op_div(Stack &stack)
 	auto b = stack.back();
 	stack.pop_back();
 
-	if (b->isZero())
+	if (a->isZero())
 		throw std::logic_error("Division by 0");
 
-	stack.push_back(*a / *b);
+	stack.push_back(*b / *a);
 }
 
 // Unstacks the first two values on the stack, calculates the modulus, thenstacks the result. If the number of values on the stack is strictly inferior to 2, theprogram execution must stop with an error. Moreover, if the divisor is equal to 0,the program execution must stop with an error too. Same note as above about fpvalues.
@@ -118,10 +124,10 @@ void Operation::op_mod(Stack &stack)
 	auto b = stack.back();
 	stack.pop_back();
 
-	if (b->isZero())
+	if (a->isZero())
 		throw std::logic_error("Modulo by 0");
 
-	stack.push_back(*a % *b);
+	stack.push_back(*b % *a);
 }
 
 // Asserts that the value at the top of the stack is an 8-bit integer. (If not,see the instructionassert), then interprets it as an ASCII value and displays thecorresponding character on the standard output.
@@ -129,7 +135,7 @@ void Operation::op_print(Stack &stack)
 {
 	auto op = stack.back();
 	if (op->getType() != e_ty_i8)
-		throw std::logic_error(std::string("Print on type ") + operations[op->getType()].name);
+		throw std::logic_error("Print on type " + op->getTypeName());
 	std::cout << op->asI8() << std::endl;
 }
 

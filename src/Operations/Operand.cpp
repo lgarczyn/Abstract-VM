@@ -18,3 +18,9 @@ const OperandInfo IOperand::operands[OPERAND_TYPE_NUM] = {
 	{e_ty_f32, "float"},
 	{e_ty_f64, "double"},
 };
+
+std::ostream &operator<<(std::ostream &out, const IOperand &hex)
+{
+	out << hex.toString();
+	return out;
+}
