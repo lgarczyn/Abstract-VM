@@ -34,6 +34,8 @@ class IOperand {
 	virtual IOperand const *operator/( IOperand const & rhs ) const = 0;
 	// Modulo
 	virtual IOperand const *operator%( IOperand const & rhs ) const = 0;
+	// Equality
+	virtual bool operator==( IOperand const & rhs ) const = 0;
 	// String representation of the instance
 	virtual std::string const &toString( void ) const = 0;
 
@@ -42,6 +44,7 @@ class IOperand {
 	virtual int32_t asI32() const = 0;
 	virtual float asF32() const = 0;
 	virtual double asF64() const = 0;
+	virtual bool isZero() const = 0;
 
 	~IOperand( void ) {}
 };

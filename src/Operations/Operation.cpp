@@ -70,6 +70,8 @@ void Operation::op_add(Stack &stack)
 	stack.pop_back();
 
 	stack.push_back(*a + *b);
+
+	op_dump(stack);
 }
 
 // Unstacks the first two values on the stack, subtracts them, then stacks theresult. If the number of values on the stack is strictly inferior to 2, the programexecution must stop with an error.
@@ -102,6 +104,9 @@ void Operation::op_div(Stack &stack)
 	auto b = stack.back();
 	stack.pop_back();
 
+	if (b->isZero())
+		throw std::logic_error("Division by 0");
+
 	stack.push_back(*a / *b);
 }
 
@@ -112,6 +117,9 @@ void Operation::op_mod(Stack &stack)
 	stack.pop_back();
 	auto b = stack.back();
 	stack.pop_back();
+
+	if (b->isZero())
+		throw std::logic_error("Modulo by 0");
 
 	stack.push_back(*a % *b);
 }
@@ -130,6 +138,5 @@ void Operation::op_exit(Stack &stack)
 {
 	std::cout << "--- Exit Dump ---" << std::endl;
 	this->op_dump(stack);
-	std::cout << "-----------------" << std::endl;
 	(void)stack;
 }
