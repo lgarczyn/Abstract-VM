@@ -8,5 +8,11 @@ This is a 42 c++ project, used to teach polymorphism, type precision and parsing
 * Overflow protection
 * Read-over subject for final touches
 * Fix leaks
-* Bonus types and features
+* Check for no exit instruction
+* Read from stdin
+	* End reading from stdin on ;;
 * Apply 42 class norm
+	* Remove functions from headers
+	* Canonical norm for any class that defines one attribute
+* Error line
+* Bonus types and features
