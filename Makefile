@@ -18,6 +18,7 @@ OBJ_PATH  = ./obj/
 FLAGS = -Wall -Werror -Wextra -std=c++14
 
 SRCS_NAME = main.cpp \
+			VM.cpp \
 			Operations/Operand.cpp \
 			Operations/OperandFactory.cpp \
 			Operations/Operation.cpp \

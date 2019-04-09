@@ -1,56 +1,46 @@
 #include <exception>
 #include <iostream>
 #include <fstream>
-#include <stack>
-#include "Parsing/Lexer.hpp"
-#include "Operations/Operation.hpp"
-#include "Parsing/Parser.hpp"
+#include "VM.hpp"
 
-void run(char *file)
+void run(const char *prog, const char *file, std::istream &f)
 {
-	std::ifstream f;
-	std::string line;
-	f.open(file);
-
-	if (f.is_open() == false)
-		throw std::logic_error(std::string("Could not open file: ") + file);
-
-	Lexer lexer = Lexer();
-	Parser parser = Parser();
-	auto stack = Stack();
 	size_t line_counter = 0;
-	bool exited = false;
+	std::string line;
+	VM vm;
 
 	while (std::getline(f, line))
 	{
 		line_counter++;
-		std::cout << line << std::endl;
-		auto operation_token = lexer.readLine(line);
-		if (operation_token)
+		try
 		{
-			if (exited)
-				throw std::logic_error("Operations attempted after exit");
-			auto operation = parser.getOperation(*operation_token);
-			delete operation_token;
-			if (operation.run(stack))
-			{
-				exited = true;
-			}
+			vm.run_line(line);
 		}
+		catch (std::exception &e)
+		{
+			std::cerr << prog << ": " << file << " line " << line_counter << ": " << e.what() << std::endl;
+		}
+
+		if (line.find(";;") != std::string::npos)
+			break;
 	}
+	vm.check_exit();
 }
 
 int main(int argc, char **argv)
 {
+	if (argc == 1)
+	{
+		run(argv[0], "cin", std::cin);
+	}
 	for (int i = 1; i < argc; i++)
 	{
-		try
-		{
-			run(argv[i]);
-		}
-		catch (std::exception &e)
-		{
-			std::cerr << argv[0] << ": Error: " << e.what() << std::endl;
-		}
+		std::ifstream f;
+		f.open(argv[i]);
+
+		if (f.is_open() == false)
+			std::cerr << argv[0] << ": Could not open file: " << argv[i] << std::endl;
+		else
+			run(argv[0], argv[i], f);
 	}
 }
