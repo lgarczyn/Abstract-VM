@@ -53,12 +53,12 @@ void Operation::op_dump(Stack &stack)
 // Asserts that the value at the top of the stack is equal to the one passedas parameter for this instruction. If it is not the case, the program execution muststop with an error. The valuevhas the same form that those passed as parametersto the instructionpush.
 void Operation::op_assert(Stack &stack)
 {
-	if (stack.back()->getType() != this->_operand->getType())
-	{
-		std::stringstream ss;
-		ss << "Failed assert: " << this->_operand->getTypeName() << " != " << stack.back()->getTypeName();
-		throw std::logic_error(ss.str());
-	}
+	//if (stack.back()->getType() != this->_operand->getType())
+	//{
+	//	std::stringstream ss;
+	//	ss << "Failed assert: " << this->_operand->getTypeName() << " != " << stack.back()->getTypeName();
+	//	throw std::logic_error(ss.str());
+	//}
 	if (*stack.back() != *this->_operand)
 	{
 		std::stringstream ss;

@@ -28,18 +28,18 @@ IOperand const * OperandFactory::createInt32( std::string const & value ) const 
 
 IOperand const * OperandFactory::createFloat( std::string const & value ) const {
 	float f = std::strtof(value.c_str(), NULL);
-	
+
 	if (std::isfinite(f) == false)
-		throw std::logic_error("Value is not finite: " + std::to_string(f));
-		
+		throw std::logic_error("Value is not parsable to a finite scalar: " + value);
+
 	return new Operand<float>(f);
 }
 
 IOperand const * OperandFactory::createDouble( std::string const & value ) const {
 	float f = std::atof(value.c_str());
-	
+
 	if (std::isfinite(f) == false)
-		throw std::logic_error("Value is not finite: " + std::to_string(f));
-		
+		throw std::logic_error("Value is not parsable to a finite scalar: " + value);
+
 	return new Operand<double>(f);
 }
