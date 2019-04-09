@@ -1,8 +1,14 @@
 #pragma once
 #include <string>
 
-struct OperationToken
+class OperationToken
 {
+  public:
+	OperationToken();
+	OperationToken( const OperationToken& cpy );
+	~OperationToken();
+	OperationToken& operator=( const OperationToken& cpy );
+
 	std::string operator_name;
 	bool has_value;
 	std::string operand_type;
@@ -11,8 +17,6 @@ struct OperationToken
 
 class Lexer
 {
-	public:
-	OperationToken *readLine(std::string &line);
-	Lexer() {};
-	~Lexer() {};
+  public:
+	OperationToken* readLine( std::string& line );
 };

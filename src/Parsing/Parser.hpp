@@ -1,6 +1,6 @@
 #pragma once
-#include "../Operations/Operation.hpp"
 #include "../Operations/OperandFactory.hpp"
+#include "../Operations/Operation.hpp"
 #include "Lexer.hpp"
 
 class Parser
@@ -9,7 +9,10 @@ class Parser
 	OperandFactory _factory;
 
   public:
-	Parser():_factory() {}
-	~Parser() {}
-	Operation getOperation(OperationToken token);
+	Parser();
+	Parser( const Parser& cpy );
+	~Parser();
+	Parser& operator=( const Parser& cpy );
+
+	Operation getOperation( OperationToken token );
 };
