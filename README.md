@@ -6,7 +6,6 @@ This is a 42 c++ project, used to teach polymorphism, type precision and parsing
 
 * Check precision of representation for all values
 * Overflow protection
-* Read-over subject for final touches
 * Fix leaks
 * Check for no exit instruction
 * Read from stdin
