@@ -55,7 +55,7 @@ class IOperand {
 	virtual double asF64() const = 0;
 	virtual bool isZero() const = 0;
 
-	~IOperand( void ) {}
+	virtual ~IOperand( void ) {}
 };
 
 std::ostream &operator<<(std::ostream &out, const IOperand &rhs);

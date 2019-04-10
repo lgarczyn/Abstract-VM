@@ -75,7 +75,7 @@ public:
 			case e_ty_f32: return new Operand<float>(this->asF32() + rhs.asF32());
 			case e_ty_f64: return new Operand<double>(this->asF64() + rhs.asF64());
 		}
-		throw std::logic_error("bad type");
+		throw std::logic_error("Bad operand type");
 	}
 	
 	IOperand const *operator-( IOperand const& rhs ) const {
@@ -87,7 +87,7 @@ public:
 			case e_ty_f32: return new Operand<float>(this->asF32() - rhs.asF32());
 			case e_ty_f64: return new Operand<double>(this->asF64() - rhs.asF64());
 		}
-		throw std::logic_error("bad type");
+		throw std::logic_error("Bad operand type");
 	}
 	
 	IOperand const *operator*( IOperand const& rhs ) const {
@@ -99,7 +99,7 @@ public:
 			case e_ty_f32: return new Operand<float>(this->asF32() * rhs.asF32());
 			case e_ty_f64: return new Operand<double>(this->asF64() * rhs.asF64());
 		}
-		throw std::logic_error("bad type");
+		throw std::logic_error("Bad operand type");
 	}
 	
 	IOperand const *operator/( IOperand const& rhs ) const {
@@ -111,7 +111,7 @@ public:
 			case e_ty_f32: return new Operand<float>(this->asF32() / rhs.asF32());
 			case e_ty_f64: return new Operand<double>(this->asF64() / rhs.asF64());
 		}
-		throw std::logic_error("bad type");
+		throw std::logic_error("Bad operand type");
 	}
 	
 	IOperand const *operator%( IOperand const& rhs ) const {
@@ -123,7 +123,7 @@ public:
 			case e_ty_f32: return new Operand<float>(std::fmodf(this->asF32(), rhs.asF32()));
 			case e_ty_f64: return new Operand<double>(std::fmod(this->asF64(), rhs.asF64()));
 		}
-		throw std::logic_error("bad type");
+		throw std::logic_error("Bad operand type");
 	}
 	
 	bool operator==( IOperand const& rhs ) const {
@@ -136,7 +136,7 @@ public:
 			case e_ty_f32: return this->asF32() == rhs.asF32();
 			case e_ty_f64: return this->asF64() == rhs.asF64();
 		}
-		throw std::logic_error("bad type");
+		throw std::logic_error("Bad operand type");
 	}
 
 	bool operator!=( IOperand const& rhs ) const {

@@ -24,11 +24,6 @@ void run(const char *prog, const char *file, std::istream &f)
 		{
 			std::cerr << "Error: Line " << line_counter << ": " << e.what() << std::endl;
 		}
-		catch (SafeIntException &e)
-		{
-			(void)e.m_code;
-			std::cerr << "Error: Line " << line_counter << ": OVERFLOW " << e.m_code << std::endl;
-		}
 
 		if (line.find(";;") != std::string::npos)
 			break;

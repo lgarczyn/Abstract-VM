@@ -39,8 +39,15 @@ Operation Parser::getOperation(OperationToken token)
 		}
 		if (i == OPERAND_TYPE_NUM)
 			throw std::logic_error(std::string("Unknown operand: ") + token.operand_type);
-		
-		operand = _factory.createOperand(operand_type, token.operand_data);
+
+		try
+		{
+			operand = _factory.createOperand(operand_type, token.operand_data);
+		}
+		catch(SafeIntException&)
+		{
+			throw std::logic_error("Value \"" + token.operand_data + "\" is not parsable to a signed int of type " + token.operand_type);
+		}
 	}
 
 	return Operation(operation_type, operand);

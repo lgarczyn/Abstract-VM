@@ -5,7 +5,8 @@ This is a 42 c++ project, used to teach polymorphism, type precision and parsing
 ## TODO
 
 * Check precision of representation for all values
-* Overflow protection
+* Clean up include paths
+* Clean exception messages
 * Fix leaks
 * Apply 42 class norm
   * Remove functions from headers
