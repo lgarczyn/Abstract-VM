@@ -22,7 +22,7 @@ OperationToken *Lexer::readLine(std::string &line)
 	{
 		has_value = false;
 		read_tokens = sscanf(line.c_str(), "%30[a-z]%n", operator_name, &read_chars);
-		
+
 		if (read_tokens != 1)
 		{
 			has_operator = false;
@@ -36,10 +36,10 @@ OperationToken *Lexer::readLine(std::string &line)
 		if (line[i] != ' ')
 		{
 			throw std::logic_error(
-				std::string("Could not parse string:\n") +
+				std::string("Could not parse: \"") +
 				line +
-				"\n Unexpected character: " +
-				line[i]);
+				"\"\nUnexpected characters: " +
+				line.substr(i));
 		}
 		i++;
 	}

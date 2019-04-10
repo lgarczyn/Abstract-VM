@@ -5,9 +5,12 @@
 
 void run(const char *prog, const char *file, std::istream &f)
 {
+	(void)prog;
 	size_t line_counter = 0;
 	std::string line;
 	VM vm;
+
+	std::cout << "--- <" << file << "> ---" << std::endl;
 
 	while (std::getline(f, line))
 	{
@@ -18,13 +21,20 @@ void run(const char *prog, const char *file, std::istream &f)
 		}
 		catch (std::exception &e)
 		{
-			std::cerr << prog << ": " << file << " line " << line_counter << ": " << e.what() << std::endl;
+			std::cerr << "Error: Line " << line_counter << ": " << e.what() << std::endl;
 		}
 
 		if (line.find(";;") != std::string::npos)
 			break;
 	}
-	vm.check_exit();
+	try
+	{
+		vm.check_exit();
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << "Error: " << e.what() << std::endl;
+	}
 }
 
 int main(int argc, char **argv)
