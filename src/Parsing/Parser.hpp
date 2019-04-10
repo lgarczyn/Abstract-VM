@@ -1,6 +1,6 @@
 #pragma once
-#include "../Operations/Operation.hpp"
-#include "../Operations/OperandFactory.hpp"
+#include "Operations/Operation.hpp"
+#include "Operations/OperandFactory.hpp"
 #include "Lexer.hpp"
 
 class Parser

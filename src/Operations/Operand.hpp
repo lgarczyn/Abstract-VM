@@ -127,7 +127,6 @@ public:
 	}
 	
 	bool operator==( IOperand const& rhs ) const {
-		std::cout << this->asF64() << "==" << rhs.asF64() << std::endl;
 		int precision = this->getMaxPrecision(rhs);
 		switch (precision) {
 			case e_ty_i8: return this->asI8() == rhs.asI8();

@@ -1,6 +1,6 @@
 #include "Lexer.hpp"
-#include "../Operations/Operation.hpp"
-#include "../Operations/Operation.hpp"
+#include "Operations/Operation.hpp"
+#include "Operations/Operation.hpp"
 #include <cstring>
 #include <cstdio>
 

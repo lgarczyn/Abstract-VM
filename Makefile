@@ -15,7 +15,7 @@ NAME = abstract-vm
 SRCS_PATH = ./src/
 OBJ_PATH  = ./obj/
 
-FLAGS = -Wall -Werror -Wextra -std=c++14 -g
+FLAGS = -Wall -Werror -Wextra -std=c++14 -I src -g
 
 SRCS_NAME = main.cpp \
 			VM.cpp \

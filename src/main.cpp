@@ -2,7 +2,6 @@
 #include <iostream>
 #include <fstream>
 #include "VM.hpp"
-#include "Operations/SafeInt.hpp"
 
 void run(const char *prog, const char *file, std::istream &f)
 {
