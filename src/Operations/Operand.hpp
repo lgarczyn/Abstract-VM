@@ -14,13 +14,37 @@ private:
 	T value;
 	std::string representation;
 
-public:
-	Operand(T value) : value(value)
+
+	static std::string string_ugly(safe_int8 i)
+	{
+		return std::to_string(i.Ref());
+	}
+	static std::string string_ugly(safe_int16 i)
+	{
+		return std::to_string(i.Ref());
+	}
+	static std::string string_ugly(safe_int32 i)
+	{
+		return std::to_string(i.Ref());
+	}
+	static std::string string_ugly(float f)
 	{
 		int precision = std::numeric_limits<T>::max_digits10 - 2;
 		std::stringstream ss;
-		ss << std::setprecision(precision) << +value;
-		representation = ss.str();
+		ss << std::setprecision(precision) << f;
+		return ss.str();
+	}
+	static std::string string_ugly(double f)
+	{
+		int precision = std::numeric_limits<T>::max_digits10 - 2;
+		std::stringstream ss;
+		ss << std::setprecision(precision) << f;
+		return ss.str();
+	}
+public:
+	Operand(T value) : value(value)
+	{
+		representation = string_ugly(value);
 	}
 	int getPrecision( void ) const {
 		return static_cast<int>(type);
@@ -45,9 +69,9 @@ public:
 	IOperand const *operator+( IOperand const& rhs ) const {
 		int precision = this->getMaxPrecision(rhs);
 		switch (precision) {
-			case e_ty_i8: return new Operand<int8_t>(this->asI8() + rhs.asI8());
-			case e_ty_i16: return new Operand<int16_t>(this->asI16() + rhs.asI16());
-			case e_ty_i32: return new Operand<int32_t>(this->asI32() + rhs.asI32());
+			case e_ty_i8: return new Operand<safe_int8>(this->asI8() + rhs.asI8());
+			case e_ty_i16: return new Operand<safe_int16>(this->asI16() + rhs.asI16());
+			case e_ty_i32: return new Operand<safe_int32>(this->asI32() + rhs.asI32());
 			case e_ty_f32: return new Operand<float>(this->asF32() + rhs.asF32());
 			case e_ty_f64: return new Operand<double>(this->asF64() + rhs.asF64());
 		}
@@ -57,9 +81,9 @@ public:
 	IOperand const *operator-( IOperand const& rhs ) const {
 		int precision = this->getMaxPrecision(rhs);
 		switch (precision) {
-			case e_ty_i8: return new Operand<int8_t>(this->asI8() - rhs.asI8());
-			case e_ty_i16: return new Operand<int16_t>(this->asI16() - rhs.asI16());
-			case e_ty_i32: return new Operand<int32_t>(this->asI32() - rhs.asI32());
+			case e_ty_i8: return new Operand<safe_int8>(this->asI8() - rhs.asI8());
+			case e_ty_i16: return new Operand<safe_int16>(this->asI16() - rhs.asI16());
+			case e_ty_i32: return new Operand<safe_int32>(this->asI32() - rhs.asI32());
 			case e_ty_f32: return new Operand<float>(this->asF32() - rhs.asF32());
 			case e_ty_f64: return new Operand<double>(this->asF64() - rhs.asF64());
 		}
@@ -69,9 +93,9 @@ public:
 	IOperand const *operator*( IOperand const& rhs ) const {
 		int precision = this->getMaxPrecision(rhs);
 		switch (precision) {
-			case e_ty_i8: return new Operand<int8_t>(this->asI8() * rhs.asI8());
-			case e_ty_i16: return new Operand<int16_t>(this->asI16() * rhs.asI16());
-			case e_ty_i32: return new Operand<int32_t>(this->asI32() * rhs.asI32());
+			case e_ty_i8: return new Operand<safe_int8>(this->asI8() * rhs.asI8());
+			case e_ty_i16: return new Operand<safe_int16>(this->asI16() * rhs.asI16());
+			case e_ty_i32: return new Operand<safe_int32>(this->asI32() * rhs.asI32());
 			case e_ty_f32: return new Operand<float>(this->asF32() * rhs.asF32());
 			case e_ty_f64: return new Operand<double>(this->asF64() * rhs.asF64());
 		}
@@ -81,9 +105,9 @@ public:
 	IOperand const *operator/( IOperand const& rhs ) const {
 		int precision = this->getMaxPrecision(rhs);
 		switch (precision) {
-			case e_ty_i8: return new Operand<int8_t>(this->asI8() / rhs.asI8());
-			case e_ty_i16: return new Operand<int16_t>(this->asI16() / rhs.asI16());
-			case e_ty_i32: return new Operand<int32_t>(this->asI32() / rhs.asI32());
+			case e_ty_i8: return new Operand<safe_int8>(this->asI8() / rhs.asI8());
+			case e_ty_i16: return new Operand<safe_int16>(this->asI16() / rhs.asI16());
+			case e_ty_i32: return new Operand<safe_int32>(this->asI32() / rhs.asI32());
 			case e_ty_f32: return new Operand<float>(this->asF32() / rhs.asF32());
 			case e_ty_f64: return new Operand<double>(this->asF64() / rhs.asF64());
 		}
@@ -93,9 +117,9 @@ public:
 	IOperand const *operator%( IOperand const& rhs ) const {
 		int precision = this->getMaxPrecision(rhs);
 		switch (precision) {
-			case e_ty_i8: return new Operand<int8_t>(this->asI8() % rhs.asI8());
-			case e_ty_i16: return new Operand<int16_t>(this->asI16() % rhs.asI16());
-			case e_ty_i32: return new Operand<int32_t>(this->asI32() % rhs.asI32());
+			case e_ty_i8: return new Operand<safe_int8>(this->asI8() % rhs.asI8());
+			case e_ty_i16: return new Operand<safe_int16>(this->asI16() % rhs.asI16());
+			case e_ty_i32: return new Operand<safe_int32>(this->asI32() % rhs.asI32());
 			case e_ty_f32: return new Operand<float>(std::fmodf(this->asF32(), rhs.asF32()));
 			case e_ty_f64: return new Operand<double>(std::fmod(this->asF64(), rhs.asF64()));
 		}
@@ -123,16 +147,16 @@ public:
 		return this->representation;
 	}
 	
-	int8_t asI8() const {
-		return static_cast<int8_t>(this->value);
+	safe_int8 asI8() const {
+		return static_cast<safe_int8>(this->value);
 	}
 
-	int16_t asI16() const {
-		return static_cast<int16_t>(this->value);
+	safe_int16 asI16() const {
+		return static_cast<safe_int16>(this->value);
 	}
 
-	int32_t asI32() const {
-		return static_cast<int32_t>(this->value);
+	safe_int32 asI32() const {
+		return static_cast<safe_int32>(this->value);
 	}
 
 	float asF32() const {

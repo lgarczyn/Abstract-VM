@@ -15,15 +15,15 @@ IOperand const * OperandFactory::createOperand( eOperandType type, std::string c
 }
 
 IOperand const * OperandFactory::createInt8( std::string const & value ) const {
-	return new Operand<int8_t>(std::atoi(value.c_str()));
+	return new Operand<safe_int8>(std::atoi(value.c_str()));
 }
 
 IOperand const * OperandFactory::createInt16( std::string const & value ) const {
-	return new Operand<int16_t>(std::atoi(value.c_str()));
+	return new Operand<safe_int16>(std::atoi(value.c_str()));
 }
 
 IOperand const * OperandFactory::createInt32( std::string const & value ) const {
-	return new Operand<int32_t>(std::atoi(value.c_str()));
+	return new Operand<safe_int32>(std::atoi(value.c_str()));
 }
 
 IOperand const * OperandFactory::createFloat( std::string const & value ) const {

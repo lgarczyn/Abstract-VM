@@ -136,7 +136,7 @@ void Operation::op_print(Stack &stack)
 	auto op = stack.back();
 	if (op->getType() != e_ty_i8)
 		throw std::logic_error("Print on type " + op->getTypeName());
-	std::cout << op->asI8() << std::endl;
+	std::cout << op->toString() << std::endl;
 }
 
 // Terminate the execution of the current program. If this instruction does notappears while all others instruction has been processed, the execution must stop with an error
