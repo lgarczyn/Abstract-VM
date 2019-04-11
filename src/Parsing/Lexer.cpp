@@ -5,7 +5,7 @@
 #include <cstdio>
 #include "Exceptions/Exceptions.hpp"
 
-OperationToken *Lexer::readLine(std::string &line)
+bool Lexer::readLine(std::string &line, OperationToken *token)
 {
 	char operator_name[30];
 	char operand_data[30];
@@ -31,10 +31,9 @@ OperationToken *Lexer::readLine(std::string &line)
 	}
 	// Skip empty lines
 	if (has_operator == false)
-		return NULL;
-
-	// Build Token
-	OperationToken *token = new OperationToken();
+		return false;
+	
+	// Fill Token
 
 	// Check for remaining characters
 	token->unexpected_chars = -1;
@@ -57,5 +56,5 @@ OperationToken *Lexer::readLine(std::string &line)
 		token->operand_type = std::string(operand_type);
 		token->operand_data = std::string(operand_data);
 	}
-	return token;
+	return true;
 }

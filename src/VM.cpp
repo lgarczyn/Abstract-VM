@@ -3,27 +3,32 @@
 
 VM::VM(): _lexer(), _parser(), _stack(), _exited() {}
 
-VM::~VM() {}
+VM::~VM() {
+	for (auto ptr:this->_stack) {
+		delete ptr;
+	}
+}
 
 void VM::run_line(std::string &line)
 {
-	auto operation_token = _lexer.readLine(line);
-	if (operation_token)
+	OperationToken token;
+	
+	bool success = _lexer.readLine(line, &token);
+
+	if (success)
 	{
 		if (_exited)
 		{
 			throw PrematureExitException();
 		}
-		auto operation = _parser.getOperation(*operation_token);
+		auto operation = _parser.getOperation(token);
 		if (operation.run(_stack))
 		{
 			_exited = true;
 		}
-		int unexpected_chars = operation_token->unexpected_chars;
-		delete operation_token;
-		if (unexpected_chars >= 0)
+		if (token.unexpected_chars >= 0)
 		{
-			throw UnexpectedCharactersException(line, unexpected_chars);
+			throw UnexpectedCharactersException(line, token.unexpected_chars);
 		}
 	}
 }

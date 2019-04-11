@@ -74,8 +74,11 @@ void Operation::op_assert(Stack &, const IOperand *highest, const IOperand *)
 {
 	if (*highest != *this->_operand)
 	{
-		throw FailedAssertException(this->_operand->toString(), highest->toString());
+		auto exception = FailedAssertException(this->_operand->toString(), highest->toString());
+		delete this->_operand;
+		throw exception;
 	}
+	delete this->_operand;
 }
 
 // Unstacks the first two values on the stack, adds them together and stacks theresult. If the number of values on the stack is strictly inferior to 2, the programexecution must stop with an error.
@@ -133,6 +136,8 @@ void Operation::op_mod(Stack &stack, const IOperand *highest, const IOperand *lo
 	stack.pop_back();
 	stack.pop_back();
 	stack.push_back(res);
+	delete highest;
+	delete lowest;
 }
 
 // Asserts that the value at the top of the stack is an 8-bit integer. (If not,see the instructionassert), then interprets it as an ASCII value and displays thecorresponding character on the standard output.
@@ -144,8 +149,4 @@ void Operation::op_print(Stack &, const IOperand *highest, const IOperand *)
 }
 
 // Terminate the execution of the current program. If this instruction does notappears while all others instruction has been processed, the execution must stop with an error
-void Operation::op_exit(Stack &stack, const IOperand *, const IOperand *)
-{
-	std::cout << "--- Exit Dump ---" << std::endl;
-	this->op_dump(stack, NULL, NULL);
-}
+void Operation::op_exit(Stack &, const IOperand *, const IOperand *) {}

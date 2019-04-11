@@ -13,7 +13,7 @@ struct OperationToken
 class Lexer
 {
 	public:
-	OperationToken *readLine(std::string &line);
+	bool readLine(std::string &line, OperationToken *out);
 	Lexer() {};
 	~Lexer() {};
 };
