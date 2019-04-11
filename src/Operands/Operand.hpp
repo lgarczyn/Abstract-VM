@@ -20,6 +20,7 @@ public:
 	{
 		representation = to_representation(value);
 	}
+	
 	int getPrecision( void ) const {
 		return static_cast<int>(type);
 	}
@@ -48,6 +49,7 @@ public:
 			case e_ty_i32: return new Operand<safe_int32>(this->asI32() + rhs.asI32());
 			case e_ty_f32: return new Operand<float>(this->asF32() + rhs.asF32());
 			case e_ty_f64: return new Operand<double>(this->asF64() + rhs.asF64());
+			case e_ty_f80: return new Operand<long double>(this->asF80() + rhs.asF80());
 		}
 		throw CorruptOperandException();
 	}
@@ -60,6 +62,7 @@ public:
 			case e_ty_i32: return new Operand<safe_int32>(this->asI32() - rhs.asI32());
 			case e_ty_f32: return new Operand<float>(this->asF32() - rhs.asF32());
 			case e_ty_f64: return new Operand<double>(this->asF64() - rhs.asF64());
+			case e_ty_f80: return new Operand<long double>(this->asF80() - rhs.asF80());
 		}
 		throw CorruptOperandException();
 	}
@@ -72,6 +75,7 @@ public:
 			case e_ty_i32: return new Operand<safe_int32>(this->asI32() * rhs.asI32());
 			case e_ty_f32: return new Operand<float>(this->asF32() * rhs.asF32());
 			case e_ty_f64: return new Operand<double>(this->asF64() * rhs.asF64());
+			case e_ty_f80: return new Operand<long double>(this->asF80() * rhs.asF80());
 		}
 		throw CorruptOperandException();
 	}
@@ -84,6 +88,7 @@ public:
 			case e_ty_i32: return new Operand<safe_int32>(this->asI32() / rhs.asI32());
 			case e_ty_f32: return new Operand<float>(this->asF32() / rhs.asF32());
 			case e_ty_f64: return new Operand<double>(this->asF64() / rhs.asF64());
+			case e_ty_f80: return new Operand<long double>(this->asF80() / rhs.asF80());
 		}
 		throw CorruptOperandException();
 	}
@@ -96,6 +101,7 @@ public:
 			case e_ty_i32: return new Operand<safe_int32>(this->asI32() % rhs.asI32());
 			case e_ty_f32: return new Operand<float>(std::fmodf(this->asF32(), rhs.asF32()));
 			case e_ty_f64: return new Operand<double>(std::fmod(this->asF64(), rhs.asF64()));
+			case e_ty_f80: return new Operand<long double>(std::fmodl(this->asF80(), rhs.asF80()));
 		}
 		throw CorruptOperandException();
 	}
@@ -108,6 +114,7 @@ public:
 			case e_ty_i32: return this->asI32() == rhs.asI32();
 			case e_ty_f32: return this->asF32() == rhs.asF32();
 			case e_ty_f64: return this->asF64() == rhs.asF64();
+			case e_ty_f80: return this->asF80() == rhs.asF80();
 		}
 		throw CorruptOperandException();
 	}
@@ -142,6 +149,10 @@ public:
 		return static_cast<double>(this->value);
 	}
 
+	double asF80() const {
+		return static_cast<long double>(this->value);
+	}
+
 	static std::string to_representation(safe_int8 i)
 	{
 		return std::to_string(static_cast<int64_t>(i));
@@ -162,6 +173,13 @@ public:
 		return ss.str();
 	}
 	static std::string to_representation(double f)
+	{
+		int precision = std::numeric_limits<T>::max_digits10 - 2;
+		std::stringstream ss;
+		ss << std::setprecision(precision) << f;
+		return ss.str();
+	}
+	static std::string to_representation(long double f)
 	{
 		int precision = std::numeric_limits<T>::max_digits10 - 2;
 		std::stringstream ss;

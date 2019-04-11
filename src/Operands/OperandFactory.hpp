@@ -15,4 +15,5 @@ public:
 	IOperand const * createInt32( std::string const & value ) const;
 	IOperand const * createFloat( std::string const & value ) const;
 	IOperand const * createDouble( std::string const & value ) const;
+	IOperand const * createLongDouble( std::string const & value ) const;
 };

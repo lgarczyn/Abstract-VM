@@ -8,6 +8,7 @@ const OperandConstructor OperandFactory::constructors[OPERAND_TYPE_NUM] = {
 	&OperandFactory::createInt32,
 	&OperandFactory::createFloat,
 	&OperandFactory::createDouble,
+	&OperandFactory::createLongDouble,
 };
 
 IOperand const * OperandFactory::createOperand( eOperandType type, std::string const & value ) const {
@@ -37,7 +38,17 @@ IOperand const * OperandFactory::createFloat( std::string const & value ) const 
 }
 
 IOperand const * OperandFactory::createDouble( std::string const & value ) const {
-	float f = std::atof(value.c_str());
+	float f = std::strtod(value.c_str(), NULL);
+
+	if (std::isfinite(f) == false)
+		throw LargeFloatingPointException(value, "double");
+
+	return new Operand<double>(f);
+}
+
+
+IOperand const * OperandFactory::createLongDouble( std::string const & value ) const {
+	float f = std::strtold(value.c_str(), NULL);
 
 	if (std::isfinite(f) == false)
 		throw LargeFloatingPointException(value, "double");

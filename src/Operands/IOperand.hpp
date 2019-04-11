@@ -9,7 +9,8 @@ enum eOperandType {
 	e_ty_i32 = 2,
 	e_ty_f32 = 3,
 	e_ty_f64 = 4,
-	OPERAND_TYPE_NUM = 5,
+	e_ty_f80 = 5,
+	OPERAND_TYPE_NUM = 6,
 };
 
 typedef SafeInt<int8_t> safe_int8;
@@ -53,6 +54,7 @@ class IOperand {
 	virtual safe_int32 asI32() const = 0;
 	virtual float asF32() const = 0;
 	virtual double asF64() const = 0;
+	virtual double asF80() const = 0;
 	virtual bool isZero() const = 0;
 
 	virtual ~IOperand( void ) {}
