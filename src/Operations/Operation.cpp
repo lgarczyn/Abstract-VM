@@ -1,4 +1,5 @@
 #include "Operation.hpp"
+#include "Exceptions/Exceptions.hpp"
 
 const OperationInfo Operation::operations[OPERATION_TYPE_NUM] = {
 	{e_op_push, "push", "", true, 0, &Operation::op_push},
@@ -19,10 +20,10 @@ bool Operation::run(Stack &stack)
 	OperationInfo info = this->operations[this->_type];
 
 	if (info.takes_value && this->_operand == NULL)
-		throw std::logic_error(std::string("No operand was passed to operation: ") + info.name);
+		throw MissingOperandException(info.name);
 
 	if ((size_t)info.required_operands > stack.size())
-		throw std::logic_error(std::string("Stack too small on operation: ") + info.name);
+		throw StackTooSmallException(info.name);
 
 	const IOperand *highest = NULL;
 	const IOperand * lowest = NULL;
@@ -40,7 +41,7 @@ bool Operation::run(Stack &stack)
 	}
 	catch (SafeIntException &e)
 	{
-		throw std::logic_error("Overflow in " + lowest->toString() + " " + info.representation + " " + highest->toString());
+		throw OverflowException(lowest->toString(), info.representation, highest->toString());
 	}
 	
 	return this->_type == e_op_exit;
@@ -73,9 +74,7 @@ void Operation::op_assert(Stack &, const IOperand *highest, const IOperand *)
 {
 	if (*highest != *this->_operand)
 	{
-		std::stringstream ss;
-		ss << "Failed assert: " << *this->_operand << " != " << *highest;
-		throw std::logic_error(ss.str());
+		throw FailedAssertException(this->_operand->toString(), highest->toString());
 	}
 }
 
@@ -116,7 +115,7 @@ void Operation::op_mul(Stack &stack, const IOperand *highest, const IOperand *lo
 void Operation::op_div(Stack &stack, const IOperand *highest, const IOperand *lowest)
 {
 	if (highest->isZero())
-		throw std::logic_error("Division by 0");
+		throw DivideByZeroException();
 	auto res = *lowest / *highest;
 	stack.pop_back();
 	stack.pop_back();
@@ -129,7 +128,7 @@ void Operation::op_div(Stack &stack, const IOperand *highest, const IOperand *lo
 void Operation::op_mod(Stack &stack, const IOperand *highest, const IOperand *lowest)
 {
 	if (highest->isZero())
-		throw std::logic_error("Modulo by 0");
+		throw ModuloByZeroException();
 	auto res = *lowest % *highest;
 	stack.pop_back();
 	stack.pop_back();
@@ -140,7 +139,7 @@ void Operation::op_mod(Stack &stack, const IOperand *highest, const IOperand *lo
 void Operation::op_print(Stack &, const IOperand *highest, const IOperand *)
 {
 	if (highest->getType() != e_ty_i8)
-		throw std::logic_error("Print on type " + highest->getTypeName());
+		throw ForbiddenPrintException(highest->getTypeName());
 	std::cout << highest->asI8().Ref() << std::endl;
 }
 

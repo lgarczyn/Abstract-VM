@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include "VM.hpp"
+#include "Exceptions/Exceptions.hpp"
 
 void run(const char *prog, const char *file, std::istream &f)
 {
@@ -19,9 +20,13 @@ void run(const char *prog, const char *file, std::istream &f)
 		{
 			vm.run_line(line);
 		}
+		catch (VMException &e)
+		{
+			std::cerr << "\e[3;31mError:\e[37m Line " << line_counter << ": " << e.toString() << std::endl;
+		}
 		catch (std::exception &e)
 		{
-			std::cerr << "Error: Line " << line_counter << ": " << e.what() << std::endl;
+			std::cerr << "\e[3;31mUnexpected Error:\e[37m Line " << line_counter << ": " << e.what() << std::endl;
 		}
 
 		if (line.find(";;") != std::string::npos)

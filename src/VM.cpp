@@ -1,5 +1,5 @@
-
 #include "VM.hpp"
+#include "Exceptions/Exceptions.hpp"
 
 VM::VM(): _lexer(), _parser(), _stack(), _exited() {}
 
@@ -11,17 +11,26 @@ void VM::run_line(std::string &line)
 	if (operation_token)
 	{
 		if (_exited)
-			throw std::logic_error("Operations attempted after exit");
+		{
+			throw PrematureExitException();
+		}
 		auto operation = _parser.getOperation(*operation_token);
-		delete operation_token;
 		if (operation.run(_stack))
 		{
 			_exited = true;
+		}
+		int unexpected_chars = operation_token->unexpected_chars;
+		delete operation_token;
+		if (unexpected_chars >= 0)
+		{
+			throw UnexpectedCharactersException(line, unexpected_chars);
 		}
 	}
 }
 
 void VM::check_exit() {
 	if (_exited == false)
-		throw std::logic_error("No exit operator before EOF");
+	{
+		throw MissingExitException();
+	}
 }

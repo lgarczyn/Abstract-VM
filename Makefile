@@ -19,6 +19,7 @@ FLAGS = -Wall -Werror -Wextra -std=c++14 -I src -g
 
 SRCS_NAME = main.cpp \
 			VM.cpp \
+			Exceptions/Exceptions.cpp \
 			Operations/Operand.cpp \
 			Operations/OperandFactory.cpp \
 			Operations/Operation.cpp \

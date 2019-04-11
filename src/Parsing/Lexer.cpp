@@ -3,6 +3,7 @@
 #include "Operations/Operation.hpp"
 #include <cstring>
 #include <cstdio>
+#include "Exceptions/Exceptions.hpp"
 
 OperationToken *Lexer::readLine(std::string &line)
 {
@@ -28,27 +29,25 @@ OperationToken *Lexer::readLine(std::string &line)
 			has_operator = false;
 		}
 	}
-
-	// Check for remaining characters
-	size_t i = read_chars;
-	while (line[i] && line[i] != ';')
-	{
-		if (line[i] != ' ')
-		{
-			throw std::logic_error(
-				std::string("Could not parse: \"") +
-				line +
-				"\"\nUnexpected characters: " +
-				line.substr(i));
-		}
-		i++;
-	}
 	// Skip empty lines
 	if (has_operator == false)
 		return NULL;
 
 	// Build Token
 	OperationToken *token = new OperationToken();
+
+	// Check for remaining characters
+	token->unexpected_chars = -1;
+	size_t i = read_chars;
+	while (line[i] && line[i] != ';')
+	{
+		if (line[i] != ' ')
+		{
+			token->unexpected_chars = i;
+			break;
+		}
+		i++;
+	}
 
 	token->operator_name = std::string(operator_name);
 	token->has_value = has_value;

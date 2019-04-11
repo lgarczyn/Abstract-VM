@@ -1,5 +1,6 @@
 #include "OperandFactory.hpp"
 #include "Operand.hpp"
+#include "Exceptions/Exceptions.hpp"
 
 const OperandConstructor OperandFactory::constructors[OPERAND_TYPE_NUM] = {
 	&OperandFactory::createInt8,
@@ -30,7 +31,7 @@ IOperand const * OperandFactory::createFloat( std::string const & value ) const 
 	float f = std::strtof(value.c_str(), NULL);
 
 	if (std::isfinite(f) == false)
-		throw std::logic_error("Value is not parsable to a finite scalar: " + value);
+		throw LargeFloatingPointException(value, "float");
 
 	return new Operand<float>(f);
 }
@@ -39,7 +40,7 @@ IOperand const * OperandFactory::createDouble( std::string const & value ) const
 	float f = std::atof(value.c_str());
 
 	if (std::isfinite(f) == false)
-		throw std::logic_error("Value is not parsable to a finite scalar: " + value);
+		throw LargeFloatingPointException(value, "double");
 
 	return new Operand<double>(f);
 }

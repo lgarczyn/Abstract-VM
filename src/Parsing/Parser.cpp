@@ -1,4 +1,5 @@
 #include "Parser.hpp"
+#include "Exceptions/Exceptions.hpp"
 
 Operation Parser::getOperation(OperationToken token)
 {
@@ -15,15 +16,15 @@ Operation Parser::getOperation(OperationToken token)
 		}
 	}
 	if (i == OPERATION_TYPE_NUM)
-		throw std::logic_error(std::string("Unknown operation: ") + token.operator_name);
+		throw UnknownOperationException(token.operator_name);
 
 	bool takes_value = Operation::operations[operation_type].takes_value;
 
 	if (takes_value && token.has_value == false)
-		throw std::logic_error(std::string("No value provided for operation: ") + token.operator_name);
+		throw MissingOperandException(token.operator_name);
 
 	if (takes_value == false && token.has_value)
-		throw std::logic_error(std::string("Useless value provided for operation: ") + token.operator_name);
+		throw UselessOperandException(token.operator_name);
 
 	const IOperand *operand = NULL;
 
@@ -38,7 +39,7 @@ Operation Parser::getOperation(OperationToken token)
 			}
 		}
 		if (i == OPERAND_TYPE_NUM)
-			throw std::logic_error(std::string("Unknown operand: ") + token.operand_type);
+			throw UnknownOperandException(token.operand_type);
 
 		try
 		{
@@ -46,7 +47,7 @@ Operation Parser::getOperation(OperationToken token)
 		}
 		catch(SafeIntException&)
 		{
-			throw std::logic_error("Value \"" + token.operand_data + "\" is not parsable to a signed int of type " + token.operand_type);
+			throw LargeIntegerException(token.operand_data, token.operand_type);
 		}
 	}
 

@@ -7,6 +7,7 @@ struct OperationToken
 	bool has_value;
 	std::string operand_type;
 	std::string operand_data;
+	int unexpected_chars;
 };
 
 class Lexer
