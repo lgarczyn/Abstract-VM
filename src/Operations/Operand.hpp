@@ -15,37 +15,10 @@ private:
 	T value;
 	std::string representation;
 
-
-	static std::string string_ugly(safe_int8 i)
-	{
-		return std::to_string(i.Ref());
-	}
-	static std::string string_ugly(safe_int16 i)
-	{
-		return std::to_string(i.Ref());
-	}
-	static std::string string_ugly(safe_int32 i)
-	{
-		return std::to_string(i.Ref());
-	}
-	static std::string string_ugly(float f)
-	{
-		int precision = std::numeric_limits<T>::max_digits10 - 2;
-		std::stringstream ss;
-		ss << std::setprecision(precision) << f;
-		return ss.str();
-	}
-	static std::string string_ugly(double f)
-	{
-		int precision = std::numeric_limits<T>::max_digits10 - 2;
-		std::stringstream ss;
-		ss << std::setprecision(precision) << f;
-		return ss.str();
-	}
 public:
 	Operand(T value) : value(value)
 	{
-		representation = string_ugly(value);
+		representation = to_representation(value);
 	}
 	int getPrecision( void ) const {
 		return static_cast<int>(type);
@@ -146,6 +119,8 @@ public:
 	std::string const &toString( void ) const {
 		return this->representation;
 	}
+
+  private:
 	
 	safe_int8 asI8() const {
 		return static_cast<safe_int8>(this->value);
@@ -165,5 +140,32 @@ public:
 
 	double asF64() const {
 		return static_cast<double>(this->value);
+	}
+
+	static std::string to_representation(safe_int8 i)
+	{
+		return std::to_string(static_cast<int64_t>(i));
+	}
+	static std::string to_representation(safe_int16 i)
+	{
+		return std::to_string(static_cast<int64_t>(i));
+	}
+	static std::string to_representation(safe_int32 i)
+	{
+		return std::to_string(static_cast<int64_t>(i));
+	}
+	static std::string to_representation(float f)
+	{
+		int precision = std::numeric_limits<T>::max_digits10 - 2;
+		std::stringstream ss;
+		ss << std::setprecision(precision) << f;
+		return ss.str();
+	}
+	static std::string to_representation(double f)
+	{
+		int precision = std::numeric_limits<T>::max_digits10 - 2;
+		std::stringstream ss;
+		ss << std::setprecision(precision) << f;
+		return ss.str();
 	}
 };

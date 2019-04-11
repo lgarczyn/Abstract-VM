@@ -145,7 +145,7 @@ void Operation::op_print(Stack &, const IOperand *highest, const IOperand *)
 {
 	if (highest->getType() != e_ty_i8)
 		throw ForbiddenPrintException(highest->getTypeName());
-	std::cout << highest->asI8().Ref() << std::endl;
+	std::cout << static_cast<int8_t>(highest->asI8()) << std::endl;
 }
 
 // Terminate the execution of the current program. If this instruction does notappears while all others instruction has been processed, the execution must stop with an error
