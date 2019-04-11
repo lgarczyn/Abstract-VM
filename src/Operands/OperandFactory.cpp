@@ -1,6 +1,6 @@
 #include "OperandFactory.hpp"
 #include "Operand.hpp"
-#include "Exceptions/Exceptions.hpp"
+#include "Exceptions/VMException.hpp"
 
 const OperandConstructor OperandFactory::constructors[OPERAND_TYPE_NUM] = {
 	&OperandFactory::createInt8,

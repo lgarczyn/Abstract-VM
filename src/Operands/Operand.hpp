@@ -5,7 +5,7 @@
 #include <sstream>
 #include <iomanip>
 #include <iostream>
-#include "Exceptions/Exceptions.hpp"
+#include "Exceptions/VMException.hpp"
 
 template <typename T>
 class Operand: public IOperand {

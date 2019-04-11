@@ -1,4 +1,4 @@
-#include "Exceptions.hpp"
+#include "VMException.hpp"
 
 
 VMException::VMException():std::exception(){};

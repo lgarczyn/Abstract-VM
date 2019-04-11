@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include "VM.hpp"
-#include "Exceptions/Exceptions.hpp"
+#include "Exceptions/VMException.hpp"
 
 void run(const char *prog, const char *file, std::istream &f)
 {

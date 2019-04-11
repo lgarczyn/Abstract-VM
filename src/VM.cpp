@@ -1,5 +1,5 @@
 #include "VM.hpp"
-#include "Exceptions/Exceptions.hpp"
+#include "Exceptions/VMException.hpp"
 
 VM::VM(): _lexer(), _parser(), _stack(), _exited() {}
 

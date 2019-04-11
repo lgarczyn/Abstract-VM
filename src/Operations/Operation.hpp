@@ -3,7 +3,7 @@
 #include <vector>
 #include <sstream>
 #include <iostream>
-#include "IOperand.hpp"
+#include "Operands/IOperand.hpp"
 
 enum eOperationType
 {

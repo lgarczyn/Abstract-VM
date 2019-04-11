@@ -1,5 +1,5 @@
 #include "Parser.hpp"
-#include "Exceptions/Exceptions.hpp"
+#include "Exceptions/VMException.hpp"
 
 Operation Parser::getOperation(OperationToken token)
 {

@@ -1,9 +1,8 @@
 #include "Lexer.hpp"
 #include "Operations/Operation.hpp"
-#include "Operations/Operation.hpp"
 #include <cstring>
 #include <cstdio>
-#include "Exceptions/Exceptions.hpp"
+#include "Exceptions/VMException.hpp"
 
 bool Lexer::readLine(std::string &line, OperationToken *token)
 {

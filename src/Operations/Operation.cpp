@@ -1,5 +1,5 @@
 #include "Operation.hpp"
-#include "Exceptions/Exceptions.hpp"
+#include "Exceptions/VMException.hpp"
 
 const OperationInfo Operation::operations[OPERATION_TYPE_NUM] = {
 	{e_op_push, "push", "", true, 0, &Operation::op_push},
