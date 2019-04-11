@@ -15,6 +15,15 @@ const OperationInfo Operation::operations[OPERATION_TYPE_NUM] = {
 	{e_op_exit, "exit", "", false, 0, &Operation::op_exit},
 };
 
+
+
+Operation::Operation() = default;
+Operation::~Operation(void) = default;
+Operation &Operation::operator=(Operation &cpy) = default;
+Operation::Operation(const Operation &cpy) = default;
+
+Operation::Operation(eOperationType type, const IOperand *operand) : _type(type), _operand(operand) {}
+
 bool Operation::run(Stack &stack)
 {
 	OperationInfo info = this->operations[this->_type];

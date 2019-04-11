@@ -46,16 +46,11 @@ class Operation
   public:
 	static const OperationInfo operations[OPERATION_TYPE_NUM];
 
-	Operation() : _type(), _operand() {}
-	Operation(eOperationType type, const IOperand *operand) : _type(type), _operand(operand) {}
-	Operation(const Operation &cpy) : _type(cpy._type), _operand(cpy._operand) {}
-	~Operation(void) {}
-	Operation &operator=(Operation &cpy)
-	{
-		this->_type = cpy._type;
-		this->_operand = cpy._operand;
-		return *this;
-	}
+	Operation();
+	Operation(eOperationType type, const IOperand *operand);
+	Operation(const Operation &cpy);
+	~Operation(void);
+	Operation &operator=(Operation &cpy);
 
 	bool run(Stack &stack);
 	// Pushes the valuevat the top of the stack.

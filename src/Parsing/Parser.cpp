@@ -43,7 +43,7 @@ Operation Parser::getOperation(OperationToken token)
 
 		try
 		{
-			operand = _factory.createOperand(operand_type, token.operand_data);
+			operand = createOperand(operand_type, token.operand_data);
 		}
 		catch(SafeIntException&)
 		{

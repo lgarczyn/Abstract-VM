@@ -3,13 +3,8 @@
 #include "Operations/OperandFactory.hpp"
 #include "Lexer.hpp"
 
-class Parser
+class Parser:OperandFactory
 {
-  private:
-	OperandFactory _factory;
-
   public:
-	Parser():_factory() {}
-	~Parser() {}
 	Operation getOperation(OperationToken token);
 };

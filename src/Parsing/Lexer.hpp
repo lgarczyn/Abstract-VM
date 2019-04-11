@@ -14,6 +14,4 @@ class Lexer
 {
 	public:
 	bool readLine(std::string &line, OperationToken *out);
-	Lexer() {};
-	~Lexer() {};
 };
