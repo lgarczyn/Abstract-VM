@@ -9,6 +9,7 @@ enum eOperationType
 {
 	e_op_push = 0,
 	e_op_pop,
+	e_op_dup,
 	e_op_dump,
 	e_op_assert,
 	e_op_add,
@@ -66,10 +67,12 @@ class Operation
 	Operation &operator=(const Operation &cpy);
 
 	bool run(Stack &stack);
-	// Pushes the valuevat the top of the stack.
+	// Pushes the value at the top of the stack.
 	void op_push(Stack &stack, const IOperand *, const IOperand *);
 	// Unstacks the value from the top of the stack.  If the stack is empty, theprogram execution must stop with an error.
 	void op_pop(Stack &stack, const IOperand *, const IOperand *);
+	// Duplicates the highest element of the stack, and pushes it to the stack
+	void op_dup(Stack &stack, const IOperand *, const IOperand *);
 	// Displays each value of the stack, from the most recent one to the oldestone WITHOUT CHANGING the stack. Each value is separated from the next oneby a newline.
 	void op_dump(Stack &stack, const IOperand *, const IOperand *);
 

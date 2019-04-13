@@ -4,6 +4,7 @@
 const OperationInfo Operation::operations[OPERATION_TYPE_NUM] = {
 	{e_op_push, "push", "", true, 0, &Operation::op_push},
 	{e_op_pop, "pop", "", false, 1, &Operation::op_pop},
+	{e_op_dup, "dup", "", false, 1, &Operation::op_dup},
 	{e_op_dump, "dump", "", false, 0, &Operation::op_dump},
 	{e_op_assert, "assert", "", true, 1, &Operation::op_assert},
 	{e_op_add, "add", "+", false, 2, &Operation::op_add},
@@ -97,6 +98,13 @@ void Operation::op_pop(Stack &stack, const IOperand *highest, const IOperand *)
 {
 	stack.pop_back();
 	delete highest;
+}
+
+// Pushes the value at the top of the stack.
+void Operation::op_dup(Stack &stack, const IOperand *highest, const IOperand *)
+{
+	stack.push_back(highest->clone());
+	_operand = NULL;
 }
 
 // Displays each value of the stack, from the most recent one to the oldestone WITHOUT CHANGING the stack. Each value is separated from the next oneby a newline.
