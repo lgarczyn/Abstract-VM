@@ -1,9 +1,0 @@
-; -------------------------------
-; 30_hard_test_by_ffouratou.avm -
-; -------------------------------
-push int8(8);swag
-push int32(+9);swag
-push float(+9.4E+46);swag
-dump
-add
-exit

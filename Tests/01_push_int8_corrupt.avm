@@ -1,6 +1,0 @@
-; --------------------------
-; 01_push_int8_corrupt.avm -
-; --------------------------
-
-push int8(42) ; comment
-exit fqef

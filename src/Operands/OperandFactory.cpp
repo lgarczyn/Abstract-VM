@@ -51,7 +51,7 @@ IOperand const * OperandFactory::createLongDouble( std::string const & value ) c
 	long double f = std::strtold(value.c_str(), NULL);
 
 	if (std::isfinite(f) == false)
-		throw LargeFloatingPointException(value, "double");
+		throw LargeFloatingPointException(value, "ldouble");
 
-	return new Operand<double>(f);
+	return new Operand<long double>(f);
 }

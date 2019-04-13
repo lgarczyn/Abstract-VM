@@ -1,0 +1,6 @@
+; -------------------------
+; 00_unexpected_chars.avm -
+; -------------------------
+
+push int8(42) ; comment
+exit fqef

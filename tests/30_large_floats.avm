@@ -1,0 +1,11 @@
+; ---------------------
+; 30_large_floats.avm -
+; ---------------------
+push int8(8)
+push int32(+9)
+push float(+9.4E+46)
+push double(+9.4E+1000)
+push ldouble(+9.4E+100000)
+dump
+add
+exit

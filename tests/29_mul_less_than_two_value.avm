@@ -1,5 +1,11 @@
-; --------------------------------
-; 29_mul_less_than_two_value.avm -
-; --------------------------------
+; -------------------------------
+; 29_op_less_than_two_value.avm -
+; -------------------------------
 push double(42)
 mul
+div
+add
+sub
+mod
+assert
+exit
