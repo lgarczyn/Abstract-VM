@@ -38,7 +38,7 @@ IOperand const * OperandFactory::createFloat( std::string const & value ) const 
 }
 
 IOperand const * OperandFactory::createDouble( std::string const & value ) const {
-	float f = std::strtod(value.c_str(), NULL);
+	double f = std::strtod(value.c_str(), NULL);
 
 	if (std::isfinite(f) == false)
 		throw LargeFloatingPointException(value, "double");
@@ -48,7 +48,7 @@ IOperand const * OperandFactory::createDouble( std::string const & value ) const
 
 
 IOperand const * OperandFactory::createLongDouble( std::string const & value ) const {
-	float f = std::strtold(value.c_str(), NULL);
+	long double f = std::strtold(value.c_str(), NULL);
 
 	if (std::isfinite(f) == false)
 		throw LargeFloatingPointException(value, "double");

@@ -149,6 +149,7 @@ void Operation::op_dup(Stack &stack)
 void Operation::op_dump(Stack &stack)
 {
 	std::stringstream ss;
+	ss << "   +---" << std::endl;
 	for (auto it = stack.rbegin(); it != stack.rend(); it++)
 	{
 		ss << "   | " << (*it)->getTypeName() << ": " << **it << std::endl;

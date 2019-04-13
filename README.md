@@ -4,7 +4,8 @@ This is a 42 c++ project, used to teach polymorphism, type precision and parsing
 
 ## TODO
 
-* Check precision of representation for all values
+* Rename some tests files
+* Add tests for bonuses
 * Fix case and format
 
 ## BONUSES
