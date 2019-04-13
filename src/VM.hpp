@@ -1,4 +1,3 @@
-#include <stack>
 #include "Parsing/Lexer.hpp"
 #include "Operations/Operation.hpp"
 #include "Parsing/Parser.hpp"
@@ -17,7 +16,6 @@ class VM
 	VM &operator=(const VM &rhs);
 	~VM();
 
-	void run_line(std::string &line);
-
-	void check_exit();
+	OpOutput run_line(std::string &line);
+	void checkExit() const;
 };

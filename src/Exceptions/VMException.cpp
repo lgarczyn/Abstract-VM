@@ -32,12 +32,12 @@ StackTooSmallException::StackTooSmallException(const std::string & name): VMExce
 	this->_msg = "Stack too small on operation: " + name;
 }
 
-OverflowException::OverflowException(const std::string & lhs, const std::string & op, const std::string & rhs): VMException() {
-	this->_msg = "Overflow in " + lhs + " " + op + " " + rhs;
+OverflowException::OverflowException(const std::string & op): VMException() {
+	this->_msg = "Overflow in " + op;
 }
 
-FailedAssertException::FailedAssertException(const std::string & lhs, const std::string & rhs): VMException() {
-	this->_msg = "Failed assert: " + lhs + " != " + rhs;
+FailedAssertException::FailedAssertException(const std::string & op): VMException() {
+	this->_msg = "Failed assert: " + op;
 }
 
 DivideByZeroException::DivideByZeroException(): VMException() {

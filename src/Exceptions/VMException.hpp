@@ -29,11 +29,11 @@ struct StackTooSmallException:VMException {
 };
 
 struct OverflowException:VMException {
-	OverflowException(const std::string & lhs, const std::string & op, const std::string & rhs);
+	OverflowException(const std::string & op);
 };
 
 struct FailedAssertException:VMException {
-	FailedAssertException(const std::string & lhs, const std::string & rhs);
+	FailedAssertException(const std::string & op);
 };
 
 struct DivideByZeroException:VMException {

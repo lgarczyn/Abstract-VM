@@ -1,8 +1,6 @@
 #pragma once
 #include <string>
 #include <vector>
-#include <sstream>
-#include <iostream>
 #include "Operands/IOperand.hpp"
 
 enum eOperationType
@@ -27,6 +25,8 @@ class Operation;
 typedef std::vector<const IOperand *> Stack;
 
 typedef void (Operation::*OperationMethod)(Stack &stack);
+
+typedef std::pair<std::string, std::string> OpOutput;
 
 struct OperationInfo
 {
@@ -57,6 +57,11 @@ class Operation
 	eOperationType _type;
 	const IOperand *_operand;
 
+	std::string _operation;
+	std::string _result;
+	std::string _output;
+	bool _ran;
+
   public:
 	static const OperationInfo operations[OPERATION_TYPE_NUM];
 
@@ -65,8 +70,16 @@ class Operation
 	Operation(const Operation &cpy);
 	~Operation(void);
 	Operation &operator=(const Operation &cpy);
+	bool isExit() const;
 
-	bool run(Stack &stack);
+	OpOutput run(Stack &stack);
+	std::string toString() const;
+
+  private:
+
+	OperationInfo checkParameters(const Stack &stack) const;
+	std::string getOperationString(const Stack &stack, const OperationInfo& info) const;
+
 	// Pushes the value at the top of the stack.
 	void op_push(Stack &stack);
 	// Unstacks the value from the top of the stack.  If the stack is empty, theprogram execution must stop with an error.

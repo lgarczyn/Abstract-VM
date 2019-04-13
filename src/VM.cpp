@@ -27,31 +27,33 @@ VM::~VM() {
 	}
 }
 
-void VM::run_line(std::string &line)
+OpOutput VM::run_line(std::string &line)
 {
 	OperationToken token;
+	OpOutput output;
 	
 	bool success = _lexer.readLine(line, &token);
 
 	if (success)
 	{
+		auto operation = _parser.getOperation(token);
+
+		output = operation.run(_stack);
+
 		if (_exited)
 		{
 			throw PrematureExitException();
 		}
-		auto operation = _parser.getOperation(token);
-		if (operation.run(_stack))
-		{
-			_exited = true;
-		}
+		_exited |= operation.isExit();
 		if (token.unexpected_chars >= 0)
 		{
 			throw UnexpectedCharactersException(line, token.unexpected_chars);
 		}
 	}
+	return output;
 }
 
-void VM::check_exit() {
+void VM::checkExit() const {
 	if (_exited == false)
 	{
 		throw MissingExitException();

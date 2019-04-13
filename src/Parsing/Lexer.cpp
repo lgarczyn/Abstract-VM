@@ -4,7 +4,13 @@
 #include <cstdio>
 #include "Exceptions/VMException.hpp"
 
-OperationToken::OperationToken() = default;
+OperationToken::OperationToken():
+	operator_name(),
+	has_value(),
+	operand_type(),
+	operand_data(),
+	unexpected_chars() {}
+
 OperationToken::OperationToken(const OperationToken&cpy) = default;
 OperationToken &OperationToken::operator=(const OperationToken&rhs) = default;
 OperationToken::~OperationToken() = default;
