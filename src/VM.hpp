@@ -13,6 +13,8 @@ class VM
 
   public:
 	VM();
+	VM(const VM& cpy);
+	VM &operator=(const VM &rhs);
 	~VM();
 
 	void run_line(std::string &line);

@@ -20,6 +20,15 @@ public:
 	{
 		representation = to_representation(value);
 	}
+
+	Operand(): Operand(0) {}
+	Operand(const Operand& cpy) = default;
+	Operand& operator=(const Operand& rhs) = default;
+	~Operand() = default;
+
+	const IOperand *clone() const {
+		return new Operand(*this);
+	}
 	
 	int getPrecision( void ) const {
 		return static_cast<int>(type);

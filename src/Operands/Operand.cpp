@@ -22,6 +22,12 @@ const OperandInfo IOperand::operands[OPERAND_TYPE_NUM] = {
 	{e_ty_f80, "ldouble"},
 };
 
+OperandInfo::OperandInfo() = default;
+OperandInfo::OperandInfo(eOperandType type, const std::string name):type(type), name(name) {}
+OperandInfo::OperandInfo(const OperandInfo&cpy) = default;
+OperandInfo &OperandInfo::operator=(const OperandInfo&rhs) = default;
+OperandInfo::~OperandInfo() = default;
+
 std::ostream &operator<<(std::ostream &out, const IOperand &hex)
 {
 	out << hex.toString();

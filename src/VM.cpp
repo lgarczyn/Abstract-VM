@@ -3,6 +3,24 @@
 
 VM::VM(): _lexer(), _parser(), _stack(), _exited() {}
 
+VM::VM(const VM& cpy)
+{
+	*this = cpy;
+}
+
+VM &VM::operator=(const VM& rhs)
+{
+	this->_lexer = rhs._lexer;
+	this->_parser = rhs._parser;
+	this->_exited = rhs._exited;
+
+	for (auto operand:rhs._stack)
+	{
+		this->_stack.push_back(operand->clone());
+	}
+	return *this;
+}
+
 VM::~VM() {
 	for (auto ptr:this->_stack) {
 		delete ptr;

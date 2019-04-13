@@ -29,6 +29,19 @@ typedef void (Operation::*OperationMethod)(Stack &stack, const IOperand *, const
 
 struct OperationInfo
 {
+	OperationInfo();
+	OperationInfo(
+		eOperationType type,
+		std::string name,
+		std::string representation,
+		bool takes_value,
+		int required_operands,
+		OperationMethod method
+	);
+	OperationInfo(const OperationInfo&cpy);
+	OperationInfo &operator=(const OperationInfo&rhs);
+	~OperationInfo();
+
 	eOperationType type;
 	std::string name;
 	std::string representation;
@@ -50,7 +63,7 @@ class Operation
 	Operation(eOperationType type, const IOperand *operand);
 	Operation(const Operation &cpy);
 	~Operation(void);
-	Operation &operator=(Operation &cpy);
+	Operation &operator=(const Operation &cpy);
 
 	bool run(Stack &stack);
 	// Pushes the valuevat the top of the stack.

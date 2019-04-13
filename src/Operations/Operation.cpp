@@ -15,12 +15,41 @@ const OperationInfo Operation::operations[OPERATION_TYPE_NUM] = {
 	{e_op_exit, "exit", "", false, 0, &Operation::op_exit},
 };
 
-
+OperationInfo::OperationInfo() = default;
+OperationInfo::OperationInfo(const OperationInfo&cpy) = default;
+OperationInfo &OperationInfo::operator=(const OperationInfo&rhs) = default;
+OperationInfo::~OperationInfo() = default;
+OperationInfo::OperationInfo(
+	eOperationType type,
+	std::string name,
+	std::string representation,
+	bool takes_value,
+	int required_operands,
+	OperationMethod method
+):	type(type),
+	name(name),
+	representation(representation),
+	takes_value(takes_value),
+	required_operands(required_operands),
+	method(method){}
 
 Operation::Operation() = default;
-Operation::~Operation(void) = default;
-Operation &Operation::operator=(Operation &cpy) = default;
-Operation::Operation(const Operation &cpy) = default;
+Operation::~Operation(void)
+{
+	delete _operand;
+}
+
+Operation &Operation::operator=(const Operation &cpy)
+{
+	this->_type = cpy._type;
+	this->_operand = cpy._operand ? cpy._operand->clone() : NULL;
+	return *this;
+}
+
+Operation::Operation(const Operation &cpy)
+{
+	*this = cpy;
+}
 
 Operation::Operation(eOperationType type, const IOperand *operand) : _type(type), _operand(operand) {}
 
@@ -60,6 +89,7 @@ bool Operation::run(Stack &stack)
 void Operation::op_push(Stack &stack, const IOperand *, const IOperand *)
 {
 	stack.push_back(_operand);
+	_operand = NULL;
 }
 
 // Unstacks the value from the top of the stack.  If the stack is empty, theprogram execution must stop with an error.
@@ -83,11 +113,8 @@ void Operation::op_assert(Stack &, const IOperand *highest, const IOperand *)
 {
 	if (*highest != *this->_operand)
 	{
-		auto exception = FailedAssertException(this->_operand->toString(), highest->toString());
-		delete this->_operand;
-		throw exception;
+		throw FailedAssertException(this->_operand->toString(), highest->toString());
 	}
-	delete this->_operand;
 }
 
 // Unstacks the first two values on the stack, adds them together and stacks theresult. If the number of values on the stack is strictly inferior to 2, the programexecution must stop with an error.

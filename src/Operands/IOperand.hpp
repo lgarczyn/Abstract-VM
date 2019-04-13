@@ -19,8 +19,14 @@ typedef SafeInt<int32_t> safe_int32;
 
 struct OperandInfo
 {
+	OperandInfo();
+	OperandInfo(const OperandInfo&cpy);
+	OperandInfo(eOperandType, std::string);
+	OperandInfo &operator=(const OperandInfo&rhs);
+	~OperandInfo();
+
 	eOperandType type;
-	const std::string name;
+	std::string name;
 };
 
 class IOperand {
@@ -57,6 +63,7 @@ class IOperand {
 	virtual double asF80() const = 0;
 	virtual bool isZero() const = 0;
 
+	virtual const IOperand* clone() const = 0;
 	virtual ~IOperand( void ) {}
 };
 

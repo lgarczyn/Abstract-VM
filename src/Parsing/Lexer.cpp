@@ -4,6 +4,11 @@
 #include <cstdio>
 #include "Exceptions/VMException.hpp"
 
+OperationToken::OperationToken() = default;
+OperationToken::OperationToken(const OperationToken&cpy) = default;
+OperationToken &OperationToken::operator=(const OperationToken&rhs) = default;
+OperationToken::~OperationToken() = default;
+
 bool Lexer::readLine(std::string &line, OperationToken *token)
 {
 	char operator_name[30];

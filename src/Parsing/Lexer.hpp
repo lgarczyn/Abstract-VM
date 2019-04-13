@@ -3,6 +3,11 @@
 
 struct OperationToken
 {
+	OperationToken();
+	OperationToken(const OperationToken&cpy);
+	OperationToken &operator=(const OperationToken&rhs);
+	~OperationToken();
+
 	std::string operator_name;
 	bool has_value;
 	std::string operand_type;
