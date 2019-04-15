@@ -8,12 +8,12 @@
 // IOperand parsing table info
 
 const OperandInfo IOperand::operands[ OPERAND_TYPE_NUM ] = {
-	{ e_ty_i8, "int8" },
-	{ e_ty_i16, "int16" },
-	{ e_ty_i32, "int32" },
-	{ e_ty_f32, "float" },
-	{ e_ty_f64, "double" },
-	{ e_ty_f80, "ldouble" },
+	{ TypeI8, "int8" },
+	{ TypeI16, "int16" },
+	{ TypeI32, "int32" },
+	{ TypeF32, "float" },
+	{ TypeF64, "double" },
+	{ TypeF80, "ldouble" },
 };
 
 OperandInfo::OperandInfo() = default;
@@ -46,12 +46,12 @@ IOperand const* AOperand::operator+( IOperand const& rhs ) const
 	int precision = this->getMaxPrecision( rhs );
 	switch ( precision )
 	{
-	case e_ty_i8: return new Operand<safe_int8>( this->asI8() + rhs.asI8() );
-	case e_ty_i16: return new Operand<safe_int16>( this->asI16() + rhs.asI16() );
-	case e_ty_i32: return new Operand<safe_int32>( this->asI32() + rhs.asI32() );
-	case e_ty_f32: return new Operand<float>( this->asF32() + rhs.asF32() );
-	case e_ty_f64: return new Operand<double>( this->asF64() + rhs.asF64() );
-	case e_ty_f80: return new Operand<long double>( this->asF80() + rhs.asF80() );
+	case TypeI8: return new Operand<safe_int8>( this->asI8() + rhs.asI8() );
+	case TypeI16: return new Operand<safe_int16>( this->asI16() + rhs.asI16() );
+	case TypeI32: return new Operand<safe_int32>( this->asI32() + rhs.asI32() );
+	case TypeF32: return new Operand<float>( this->asF32() + rhs.asF32() );
+	case TypeF64: return new Operand<double>( this->asF64() + rhs.asF64() );
+	case TypeF80: return new Operand<long double>( this->asF80() + rhs.asF80() );
 	}
 	throw CorruptOperandException();
 }
@@ -61,12 +61,12 @@ IOperand const* AOperand::operator-( IOperand const& rhs ) const
 	int precision = this->getMaxPrecision( rhs );
 	switch ( precision )
 	{
-	case e_ty_i8: return new Operand<safe_int8>( this->asI8() - rhs.asI8() );
-	case e_ty_i16: return new Operand<safe_int16>( this->asI16() - rhs.asI16() );
-	case e_ty_i32: return new Operand<safe_int32>( this->asI32() - rhs.asI32() );
-	case e_ty_f32: return new Operand<float>( this->asF32() - rhs.asF32() );
-	case e_ty_f64: return new Operand<double>( this->asF64() - rhs.asF64() );
-	case e_ty_f80: return new Operand<long double>( this->asF80() - rhs.asF80() );
+	case TypeI8: return new Operand<safe_int8>( this->asI8() - rhs.asI8() );
+	case TypeI16: return new Operand<safe_int16>( this->asI16() - rhs.asI16() );
+	case TypeI32: return new Operand<safe_int32>( this->asI32() - rhs.asI32() );
+	case TypeF32: return new Operand<float>( this->asF32() - rhs.asF32() );
+	case TypeF64: return new Operand<double>( this->asF64() - rhs.asF64() );
+	case TypeF80: return new Operand<long double>( this->asF80() - rhs.asF80() );
 	}
 	throw CorruptOperandException();
 }
@@ -76,12 +76,12 @@ IOperand const* AOperand::operator*( IOperand const& rhs ) const
 	int precision = this->getMaxPrecision( rhs );
 	switch ( precision )
 	{
-	case e_ty_i8: return new Operand<safe_int8>( this->asI8() * rhs.asI8() );
-	case e_ty_i16: return new Operand<safe_int16>( this->asI16() * rhs.asI16() );
-	case e_ty_i32: return new Operand<safe_int32>( this->asI32() * rhs.asI32() );
-	case e_ty_f32: return new Operand<float>( this->asF32() * rhs.asF32() );
-	case e_ty_f64: return new Operand<double>( this->asF64() * rhs.asF64() );
-	case e_ty_f80: return new Operand<long double>( this->asF80() * rhs.asF80() );
+	case TypeI8: return new Operand<safe_int8>( this->asI8() * rhs.asI8() );
+	case TypeI16: return new Operand<safe_int16>( this->asI16() * rhs.asI16() );
+	case TypeI32: return new Operand<safe_int32>( this->asI32() * rhs.asI32() );
+	case TypeF32: return new Operand<float>( this->asF32() * rhs.asF32() );
+	case TypeF64: return new Operand<double>( this->asF64() * rhs.asF64() );
+	case TypeF80: return new Operand<long double>( this->asF80() * rhs.asF80() );
 	}
 	throw CorruptOperandException();
 }
@@ -91,12 +91,12 @@ IOperand const* AOperand::operator/( IOperand const& rhs ) const
 	int precision = this->getMaxPrecision( rhs );
 	switch ( precision )
 	{
-	case e_ty_i8: return new Operand<safe_int8>( this->asI8() / rhs.asI8() );
-	case e_ty_i16: return new Operand<safe_int16>( this->asI16() / rhs.asI16() );
-	case e_ty_i32: return new Operand<safe_int32>( this->asI32() / rhs.asI32() );
-	case e_ty_f32: return new Operand<float>( this->asF32() / rhs.asF32() );
-	case e_ty_f64: return new Operand<double>( this->asF64() / rhs.asF64() );
-	case e_ty_f80: return new Operand<long double>( this->asF80() / rhs.asF80() );
+	case TypeI8: return new Operand<safe_int8>( this->asI8() / rhs.asI8() );
+	case TypeI16: return new Operand<safe_int16>( this->asI16() / rhs.asI16() );
+	case TypeI32: return new Operand<safe_int32>( this->asI32() / rhs.asI32() );
+	case TypeF32: return new Operand<float>( this->asF32() / rhs.asF32() );
+	case TypeF64: return new Operand<double>( this->asF64() / rhs.asF64() );
+	case TypeF80: return new Operand<long double>( this->asF80() / rhs.asF80() );
 	}
 	throw CorruptOperandException();
 }
@@ -106,12 +106,12 @@ IOperand const* AOperand::operator%( IOperand const& rhs ) const
 	int precision = this->getMaxPrecision( rhs );
 	switch ( precision )
 	{
-	case e_ty_i8: return new Operand<safe_int8>( this->asI8() % rhs.asI8() );
-	case e_ty_i16: return new Operand<safe_int16>( this->asI16() % rhs.asI16() );
-	case e_ty_i32: return new Operand<safe_int32>( this->asI32() % rhs.asI32() );
-	case e_ty_f32: return new Operand<float>( std::fmodf( this->asF32(), rhs.asF32() ) );
-	case e_ty_f64: return new Operand<double>( std::fmod( this->asF64(), rhs.asF64() ) );
-	case e_ty_f80: return new Operand<long double>( std::fmodl( this->asF80(), rhs.asF80() ) );
+	case TypeI8: return new Operand<safe_int8>( this->asI8() % rhs.asI8() );
+	case TypeI16: return new Operand<safe_int16>( this->asI16() % rhs.asI16() );
+	case TypeI32: return new Operand<safe_int32>( this->asI32() % rhs.asI32() );
+	case TypeF32: return new Operand<float>( std::fmodf( this->asF32(), rhs.asF32() ) );
+	case TypeF64: return new Operand<double>( std::fmod( this->asF64(), rhs.asF64() ) );
+	case TypeF80: return new Operand<long double>( std::fmodl( this->asF80(), rhs.asF80() ) );
 	}
 	throw CorruptOperandException();
 }
@@ -121,12 +121,12 @@ bool AOperand::operator==( IOperand const& rhs ) const
 	int precision = this->getMaxPrecision( rhs );
 	switch ( precision )
 	{
-	case e_ty_i8: return this->asI8() == rhs.asI8();
-	case e_ty_i16: return this->asI16() == rhs.asI16();
-	case e_ty_i32: return this->asI32() == rhs.asI32();
-	case e_ty_f32: return this->asF32() == rhs.asF32();
-	case e_ty_f64: return this->asF64() == rhs.asF64();
-	case e_ty_f80: return this->asF80() == rhs.asF80();
+	case TypeI8: return this->asI8() == rhs.asI8();
+	case TypeI16: return this->asI16() == rhs.asI16();
+	case TypeI32: return this->asI32() == rhs.asI32();
+	case TypeF32: return this->asF32() == rhs.asF32();
+	case TypeF64: return this->asF64() == rhs.asF64();
+	case TypeF80: return this->asF80() == rhs.asF80();
 	}
 	throw CorruptOperandException();
 }
@@ -135,12 +135,12 @@ bool AOperand::operator!=( IOperand const& rhs ) const { return !( *this == rhs 
 
 // Type value of all Operand instances
 
-template <> const eOperandType Operand<safe_int8>::type = e_ty_i8;
-template <> const eOperandType Operand<safe_int16>::type = e_ty_i16;
-template <> const eOperandType Operand<safe_int32>::type = e_ty_i32;
-template <> const eOperandType Operand<float>::type = e_ty_f32;
-template <> const eOperandType Operand<double>::type = e_ty_f64;
-template <> const eOperandType Operand<long double>::type = e_ty_f80;
+template <> const eOperandType Operand<safe_int8>::type = TypeI8;
+template <> const eOperandType Operand<safe_int16>::type = TypeI16;
+template <> const eOperandType Operand<safe_int32>::type = TypeI32;
+template <> const eOperandType Operand<float>::type = TypeF32;
+template <> const eOperandType Operand<double>::type = TypeF64;
+template <> const eOperandType Operand<long double>::type = TypeF80;
 
 // Get the string representation of an Operand instanciation
 

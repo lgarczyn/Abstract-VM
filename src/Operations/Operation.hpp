@@ -6,18 +6,18 @@
 
 enum eOperationType
 {
-	e_op_push = 0,
-	e_op_pop,
-	e_op_dup,
-	e_op_dump,
-	e_op_assert,
-	e_op_add,
-	e_op_sub,
-	e_op_mul,
-	e_op_div,
-	e_op_mod,
-	e_op_print,
-	e_op_exit,
+	OpPush = 0,
+	OpPop,
+	OpDup,
+	OpDump,
+	OpAssert,
+	OpAdd,
+	OpSub,
+	OpMul,
+	OpDiv,
+	OpMod,
+	OpPrint,
+	OpExit,
 	OPERATION_TYPE_NUM,
 };
 

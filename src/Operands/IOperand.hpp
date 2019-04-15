@@ -6,12 +6,12 @@
 
 enum eOperandType
 {
-	e_ty_i8 = 0,
-	e_ty_i16 = 1,
-	e_ty_i32 = 2,
-	e_ty_f32 = 3,
-	e_ty_f64 = 4,
-	e_ty_f80 = 5,
+	TypeI8 = 0,
+	TypeI16 = 1,
+	TypeI32 = 2,
+	TypeF32 = 3,
+	TypeF64 = 4,
+	TypeF80 = 5,
 	OPERAND_TYPE_NUM = 6,
 };
 

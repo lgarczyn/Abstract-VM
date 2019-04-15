@@ -5,18 +5,18 @@
 #include <sstream>
 
 const OperationInfo Operation::operations[ OPERATION_TYPE_NUM ] = {
-	{ e_op_push, "push", "push", true, 0, &Operation::opPush },
-	{ e_op_pop, "pop", "pop", false, 1, &Operation::opPop },
-	{ e_op_dup, "dup", "dup", false, 1, &Operation::opDup },
-	{ e_op_dump, "dump", "dump", false, 0, &Operation::opDump },
-	{ e_op_assert, "assert", "==", true, 1, &Operation::opAssert },
-	{ e_op_add, "add", "+", false, 2, &Operation::opAdd },
-	{ e_op_sub, "sub", "-", false, 2, &Operation::opSub },
-	{ e_op_mul, "mul", "*", false, 2, &Operation::opMul },
-	{ e_op_div, "div", "/", false, 2, &Operation::opDiv },
-	{ e_op_mod, "mod", "%", false, 2, &Operation::opMod },
-	{ e_op_print, "print", "print", false, 1, &Operation::opPrint },
-	{ e_op_exit, "exit", "exit", false, 0, &Operation::opExit },
+	{ OpPush, "push", "push", true, 0, &Operation::opPush },
+	{ OpPop, "pop", "pop", false, 1, &Operation::opPop },
+	{ OpDup, "dup", "dup", false, 1, &Operation::opDup },
+	{ OpDump, "dump", "dump", false, 0, &Operation::opDump },
+	{ OpAssert, "assert", "==", true, 1, &Operation::opAssert },
+	{ OpAdd, "add", "+", false, 2, &Operation::opAdd },
+	{ OpSub, "sub", "-", false, 2, &Operation::opSub },
+	{ OpMul, "mul", "*", false, 2, &Operation::opMul },
+	{ OpDiv, "div", "/", false, 2, &Operation::opDiv },
+	{ OpMod, "mod", "%", false, 2, &Operation::opMod },
+	{ OpPrint, "print", "print", false, 1, &Operation::opPrint },
+	{ OpExit, "exit", "exit", false, 0, &Operation::opExit },
 };
 
 OperationInfo::OperationInfo() = default;
@@ -35,7 +35,7 @@ OperationInfo::OperationInfo( eOperationType type, std::string name, std::string
 }
 
 Operation::Operation()
-	: Operation( e_op_add, NULL )
+	: Operation( OpAdd, NULL )
 {
 }
 
@@ -264,7 +264,7 @@ void Operation::opPrint( Stack& stack )
 {
 	const IOperand* highest = stack.back();
 
-	if ( highest->getType() != e_ty_i8 )
+	if ( highest->getType() != TypeI8 )
 		throw ForbiddenPrintException( highest->getTypeName() );
 
 	this->_output = "   | ";
@@ -276,4 +276,4 @@ void Operation::opPrint( Stack& stack )
 // others instruction has been processed, the execution must stop with an error
 void Operation::opExit( Stack& ) {}
 
-bool Operation::isExit() const { return _type == e_op_exit; }
+bool Operation::isExit() const { return _type == OpExit; }
