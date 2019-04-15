@@ -4,8 +4,8 @@
 struct OperationToken
 {
 	OperationToken();
-	OperationToken(const OperationToken&cpy);
-	OperationToken &operator=(const OperationToken&rhs);
+	OperationToken( const OperationToken& cpy );
+	OperationToken& operator=( const OperationToken& rhs );
 	~OperationToken();
 
 	std::string operator_name;
@@ -17,6 +17,6 @@ struct OperationToken
 
 class Lexer
 {
-	public:
-	bool readLine(std::string &line, OperationToken *out);
+  public:
+	bool readLine( std::string& line, OperationToken* out );
 };

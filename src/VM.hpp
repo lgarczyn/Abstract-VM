@@ -1,5 +1,5 @@
-#include "Parsing/Lexer.hpp"
 #include "Operations/Operation.hpp"
+#include "Parsing/Lexer.hpp"
 #include "Parsing/Parser.hpp"
 
 class VM
@@ -12,10 +12,10 @@ class VM
 
   public:
 	VM();
-	VM(const VM& cpy);
-	VM &operator=(const VM &rhs);
+	VM( const VM& cpy );
+	VM& operator=( const VM& rhs );
 	~VM();
 
-	OpOutput run_line(std::string &line);
+	OpOutput run_line( std::string& line );
 	void checkExit() const;
 };

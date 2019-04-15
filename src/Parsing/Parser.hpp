@@ -1,10 +1,10 @@
 #pragma once
-#include "Operations/Operation.hpp"
-#include "Operands/OperandFactory.hpp"
 #include "Lexer.hpp"
+#include "Operands/OperandFactory.hpp"
+#include "Operations/Operation.hpp"
 
-class Parser:OperandFactory
+class Parser : OperandFactory
 {
   public:
-	Operation getOperation(OperationToken token);
+	Operation getOperation( OperationToken token );
 };

@@ -1,55 +1,56 @@
 #include "Parser.hpp"
+
 #include "Exceptions/VMException.hpp"
 
-Operation Parser::getOperation(OperationToken token)
+Operation Parser::getOperation( OperationToken token )
 {
 	eOperationType operation_type;
 	eOperandType operand_type;
 
 	int i;
-	for (i = 0; i < OPERATION_TYPE_NUM; i++)
+	for ( i = 0; i < OPERATION_TYPE_NUM; i++ )
 	{
-		if (token.operator_name.compare(Operation::operations[i].name) == 0)
+		if ( token.operator_name == Operation::operations[ i ].name )
 		{
-			operation_type = Operation::operations[i].type;
+			operation_type = Operation::operations[ i ].type;
 			break;
 		}
 	}
-	if (i == OPERATION_TYPE_NUM)
-		throw UnknownOperationException(token.operator_name);
+	if ( i == OPERATION_TYPE_NUM )
+		throw UnknownOperationException( token.operator_name );
 
-	bool takes_value = Operation::operations[operation_type].takes_value;
+	bool takes_value = Operation::operations[ operation_type ].takes_value;
 
-	if (takes_value && token.has_value == false)
-		throw MissingOperandException(token.operator_name);
+	if ( takes_value && token.has_value == false )
+		throw MissingOperandException( token.operator_name );
 
-	if (takes_value == false && token.has_value)
-		throw UselessOperandException(token.operator_name);
+	if ( takes_value == false && token.has_value )
+		throw UselessOperandException( token.operator_name );
 
-	const IOperand *operand = NULL;
+	const IOperand* operand = NULL;
 
-	if (takes_value)
+	if ( takes_value )
 	{
-		for (i = 0; i < OPERAND_TYPE_NUM; i++)
+		for ( i = 0; i < OPERAND_TYPE_NUM; i++ )
 		{
-			if (token.operand_type.compare(IOperand::operands[i].name) == 0)
+			if ( token.operand_type == IOperand::operands[ i ].name )
 			{
-				operand_type = IOperand::operands[i].type;
+				operand_type = IOperand::operands[ i ].type;
 				break;
 			}
 		}
-		if (i == OPERAND_TYPE_NUM)
-			throw UnknownOperandException(token.operand_type);
+		if ( i == OPERAND_TYPE_NUM )
+			throw UnknownOperandException( token.operand_type );
 
 		try
 		{
-			operand = createOperand(operand_type, token.operand_data);
+			operand = createOperand( operand_type, token.operand_data );
 		}
-		catch(SafeIntException&)
+		catch ( SafeIntException& )
 		{
-			throw LargeIntegerException(token.operand_data, token.operand_type);
+			throw LargeIntegerException( token.operand_data, token.operand_type );
 		}
 	}
 
-	return Operation(operation_type, operand);
+	return Operation( operation_type, operand );
 }

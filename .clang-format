@@ -6,9 +6,7 @@ AlwaysBreakAfterReturnType: None
 AlwaysBreakTemplateDeclarations: 'true'
 BreakBeforeBraces: Allman
 BreakBeforeInheritanceComma: 'true'
-BreakConstructorInitializersBeforeComma: 'true'
 BreakBeforeTernaryOperators: 'false'
-BreakConstructorInitializers: AfterColon
 ColumnLimit: '100'
 ContinuationIndentWidth: '4'
 Cpp11BracedListStyle: 'false'
@@ -33,5 +31,12 @@ Standard: Cpp11
 TabWidth: '4'
 UseTab: ForContinuationAndIndentation
 AccessModifierOffset: '-2'
+BreakConstructorInitializersBeforeComma: 'true'
+ConstructorInitializerAllOnOneLineOrOnePerLine: 'true'
+AlwaysBreakTemplateDeclarations: 'false'
+BreakBeforeTernaryOperators: 'true'
+BreakConstructorInitializersBeforeComma: 'true'
+ConstructorInitializerAllOnOneLineOrOnePerLine: 'false'
+
 
 ...
