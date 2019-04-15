@@ -2,10 +2,6 @@
 
 This is a 42 c++ project, used to teach polymorphism, type precision and parsing.
 
-## TODO
-
-* Fix case
-
 ## BONUSES
 
 * Permissive error handling
