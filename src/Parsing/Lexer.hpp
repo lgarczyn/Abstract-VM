@@ -8,11 +8,11 @@ struct OperationToken
 	OperationToken& operator=( const OperationToken& rhs );
 	~OperationToken();
 
-	std::string operator_name;
-	bool has_value;
-	std::string operand_type;
-	std::string operand_data;
-	int unexpected_chars;
+	std::string operatorName;
+	bool hasValue;
+	std::string operandType;
+	std::string operandData;
+	int unexpectedChars;
 };
 
 // Transform a single instruction line into a token, with seperated content

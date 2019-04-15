@@ -37,7 +37,7 @@ template <typename T> class Operand : public AOperand
 	Operand( T value )
 		: value( value )
 	{
-		representation = to_representation( value );
+		representation = toRepresentation( value );
 	}
 
 	Operand()
@@ -78,10 +78,10 @@ template <typename T> class Operand : public AOperand
 
 	double asF80() const { return static_cast<long double>( this->value ); }
 
-	static std::string to_representation( safe_int8 i );
-	static std::string to_representation( safe_int16 i );
-	static std::string to_representation( safe_int32 i );
-	static std::string to_representation( float f );
-	static std::string to_representation( double f );
-	static std::string to_representation( long double f );
+	static std::string toRepresentation( safe_int8 i );
+	static std::string toRepresentation( safe_int16 i );
+	static std::string toRepresentation( safe_int32 i );
+	static std::string toRepresentation( float f );
+	static std::string toRepresentation( double f );
+	static std::string toRepresentation( long double f );
 };

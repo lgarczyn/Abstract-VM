@@ -18,41 +18,39 @@ const std::string ENDL = RESET + "\n";
 
 
 // Handle VM launch and return values, display any relevant info
-void run( bool standard_input, std::istream& stream, bool write, bool debug )
+void run( bool standardInput, std::istream& stream, bool write, bool debug )
 {
 	std::string line;
 	VM vm;
-	size_t line_num = 0;
+	size_t lineNum = 0;
 
 	while ( std::getline( stream, line ) )
 	{
-		line_num++;
+		lineNum++;
 
-		std::string op_string;
 		// Display read line
 		if ( write )
 		{
-			std::cout << PURPLE << std::setw( 4 ) << line_num << ": " << DARK_GRAY << line << ENDL;
+			std::cout << PURPLE << std::setw( 4 ) << lineNum << ": " << DARK_GRAY << line << ENDL;
 		}
 		try
 		{
 			// Run instruction, and get display and debug output
-			auto [ output_str, debug_str ] = vm.run_line( line );
-			if ( debug && debug_str.size() )
+			auto [ outputStr, debugStr ] = vm.runLine( line );
+			if ( debug && debugStr.size() )
 			{
-				std::cout << GREEN << std::setw( 4 ) << line_num << ": " << GRAY << debug_str
-						  << ENDL;
+				std::cout << GREEN << std::setw( 4 ) << lineNum << ": " << GRAY << debugStr << ENDL;
 			}
-			std::cout << output_str;
+			std::cout << outputStr;
 		}
 		catch ( VMException& e )
 		{
 			// Display any expected error
-			std::cerr << RED << std::setw( 4 ) << line_num << ": " << e.toString() << ENDL;
+			std::cerr << RED << std::setw( 4 ) << lineNum << ": " << e.toString() << ENDL;
 		}
 
 		// Quit if received standard input EOF symbol
-		if ( standard_input && line.find( ";;" ) != std::string::npos )
+		if ( standardInput && line.find( ";;" ) != std::string::npos )
 			break;
 	}
 	try

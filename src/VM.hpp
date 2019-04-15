@@ -18,6 +18,6 @@ class VM
 	VM& operator=( const VM& rhs );
 	~VM();
 
-	OpOutput run_line( std::string& line );
+	OpOutput runLine( std::string& line );
 	void checkExit() const;
 };

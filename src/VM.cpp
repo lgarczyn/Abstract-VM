@@ -33,7 +33,7 @@ VM::~VM()
 	}
 }
 
-OpOutput VM::run_line( std::string& line )
+OpOutput VM::runLine( std::string& line )
 {
 	OperationToken token;
 	OpOutput output;
@@ -51,9 +51,9 @@ OpOutput VM::run_line( std::string& line )
 			throw PrematureExitException();
 		}
 		_exited |= operation.isExit();
-		if ( token.unexpected_chars >= 0 )
+		if ( token.unexpectedChars >= 0 )
 		{
-			throw UnexpectedCharactersException( line, token.unexpected_chars );
+			throw UnexpectedCharactersException( line, token.unexpectedChars );
 		}
 	}
 	return output;

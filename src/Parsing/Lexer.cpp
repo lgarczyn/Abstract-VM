@@ -7,11 +7,11 @@
 #include <cstring>
 
 OperationToken::OperationToken()
-	: operator_name()
-	, has_value()
-	, operand_type()
-	, operand_data()
-	, unexpected_chars()
+	: operatorName()
+	, hasValue()
+	, operandType()
+	, operandData()
+	, unexpectedChars()
 {
 }
 
@@ -21,55 +21,55 @@ OperationToken::~OperationToken() = default;
 
 bool Lexer::readLine( std::string& line, OperationToken* token )
 {
-	char operator_name[ 30 ];
-	char operand_data[ 30 ];
-	char operand_type[ 30 ];
-	bool has_value = true;
-	bool has_operator = true;
-	int read_chars = 0;
-	int read_tokens;
+	char operatorName[ 30 ];
+	char operandData[ 30 ];
+	char operandType[ 30 ];
+	bool hasValue = true;
+	bool hasOperator = true;
+	int readChars = 0;
+	int readTokens;
 
 	// Reading "Operator Type(Value)" format
-	read_tokens = sscanf( line.c_str(), "%30[a-z] %30[a-z0-9](%30[0-9.Ee+-])%n", operator_name,
-		operand_type, operand_data, &read_chars );
+	readTokens = sscanf( line.c_str(), "%30[a-z] %30[a-z0-9](%30[0-9.Ee+-])%n", operatorName,
+		operandType, operandData, &readChars );
 
 	// If failed, attempt "Operator" format
-	if ( read_tokens != 3 )
+	if ( readTokens != 3 )
 	{
-		has_value = false;
-		read_tokens = sscanf( line.c_str(), "%30[a-z]%n", operator_name, &read_chars );
+		hasValue = false;
+		readTokens = sscanf( line.c_str(), "%30[a-z]%n", operatorName, &readChars );
 
-		if ( read_tokens != 1 )
+		if ( readTokens != 1 )
 		{
-			has_operator = false;
+			hasOperator = false;
 		}
 	}
 	// Skip empty lines
-	if ( has_operator == false )
+	if ( hasOperator == false )
 		return false;
 
 	// Fill Token
 
 	// Check for remaining characters
-	token->unexpected_chars = -1;
-	size_t i = read_chars;
+	token->unexpectedChars = -1;
+	size_t i = readChars;
 	while ( line[ i ] && line[ i ] != ';' )
 	{
 		if ( line[ i ] != ' ' )
 		{
-			token->unexpected_chars = i;
+			token->unexpectedChars = i;
 			break;
 		}
 		i++;
 	}
 
-	token->operator_name = std::string( operator_name );
-	token->has_value = has_value;
+	token->operatorName = std::string( operatorName );
+	token->hasValue = hasValue;
 
-	if ( has_value )
+	if ( hasValue )
 	{
-		token->operand_type = std::string( operand_type );
-		token->operand_data = std::string( operand_data );
+		token->operandType = std::string( operandType );
+		token->operandData = std::string( operandData );
 	}
 	return true;
 }

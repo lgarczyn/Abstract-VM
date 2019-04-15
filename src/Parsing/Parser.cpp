@@ -4,53 +4,53 @@
 
 Operation Parser::getOperation( OperationToken token )
 {
-	eOperationType operation_type;
-	eOperandType operand_type;
+	eOperationType operationType;
+	eOperandType operandType;
 
 	int i;
 	for ( i = 0; i < OPERATION_TYPE_NUM; i++ )
 	{
-		if ( token.operator_name == Operation::operations[ i ].name )
+		if ( token.operatorName == Operation::operations[ i ].name )
 		{
-			operation_type = Operation::operations[ i ].type;
+			operationType = Operation::operations[ i ].type;
 			break;
 		}
 	}
 	if ( i == OPERATION_TYPE_NUM )
-		throw UnknownOperationException( token.operator_name );
+		throw UnknownOperationException( token.operatorName );
 
-	bool takes_value = Operation::operations[ operation_type ].takes_value;
+	bool takesValue = Operation::operations[ operationType ].takesValue;
 
-	if ( takes_value && token.has_value == false )
-		throw MissingOperandException( token.operator_name );
+	if ( takesValue && token.hasValue == false )
+		throw MissingOperandException( token.operatorName );
 
-	if ( takes_value == false && token.has_value )
-		throw UselessOperandException( token.operator_name );
+	if ( takesValue == false && token.hasValue )
+		throw UselessOperandException( token.operatorName );
 
 	const IOperand* operand = NULL;
 
-	if ( takes_value )
+	if ( takesValue )
 	{
 		for ( i = 0; i < OPERAND_TYPE_NUM; i++ )
 		{
-			if ( token.operand_type == IOperand::operands[ i ].name )
+			if ( token.operandType == IOperand::operands[ i ].name )
 			{
-				operand_type = IOperand::operands[ i ].type;
+				operandType = IOperand::operands[ i ].type;
 				break;
 			}
 		}
 		if ( i == OPERAND_TYPE_NUM )
-			throw UnknownOperandException( token.operand_type );
+			throw UnknownOperandException( token.operandType );
 
 		try
 		{
-			operand = createOperand( operand_type, token.operand_data );
+			operand = createOperand( operandType, token.operandData );
 		}
 		catch ( SafeIntException& )
 		{
-			throw LargeIntegerException( token.operand_data, token.operand_type );
+			throw LargeIntegerException( token.operandData, token.operandType );
 		}
 	}
 
-	return Operation( operation_type, operand );
+	return Operation( operationType, operand );
 }

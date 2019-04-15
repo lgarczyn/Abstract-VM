@@ -144,22 +144,22 @@ template <> const eOperandType Operand<long double>::type = e_ty_f80;
 
 // Get the string representation of an Operand instanciation
 
-template <> std::string Operand<safe_int8>::to_representation( safe_int8 i )
+template <> std::string Operand<safe_int8>::toRepresentation( safe_int8 i )
 {
 	return std::to_string( static_cast<int32_t>( i ) );
 }
 
-template <> std::string Operand<safe_int16>::to_representation( safe_int16 i )
+template <> std::string Operand<safe_int16>::toRepresentation( safe_int16 i )
 {
 	return std::to_string( static_cast<int32_t>( i ) );
 }
 
-template <> std::string Operand<safe_int32>::to_representation( safe_int32 i )
+template <> std::string Operand<safe_int32>::toRepresentation( safe_int32 i )
 {
 	return std::to_string( static_cast<int32_t>( i ) );
 }
 
-template <> std::string Operand<float>::to_representation( float f )
+template <> std::string Operand<float>::toRepresentation( float f )
 {
 	int precision = std::numeric_limits<float>::max_digits10 - 2;
 	std::stringstream ss;
@@ -167,7 +167,7 @@ template <> std::string Operand<float>::to_representation( float f )
 	return ss.str();
 }
 
-template <> std::string Operand<double>::to_representation( double f )
+template <> std::string Operand<double>::toRepresentation( double f )
 {
 	int precision = std::numeric_limits<double>::max_digits10 - 2;
 	std::stringstream ss;
@@ -175,7 +175,7 @@ template <> std::string Operand<double>::to_representation( double f )
 	return ss.str();
 }
 
-template <> std::string Operand<long double>::to_representation( long double f )
+template <> std::string Operand<long double>::toRepresentation( long double f )
 {
 	int precision = std::numeric_limits<long double>::max_digits10 - 2;
 	std::stringstream ss;
