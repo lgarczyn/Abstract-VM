@@ -3,7 +3,7 @@
 This is a 42 c++ project, used to teach polymorphism, type precision and parsing.
 
 
-![Subject in French](abstract-vm.en.pdf)
+![Subject](abstract-vm.en.pdf)
 
 ## BONUSES
 
