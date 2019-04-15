@@ -15,6 +15,7 @@ struct OperationToken
 	int unexpected_chars;
 };
 
+// Transform a single instruction line into a token, with seperated content
 class Lexer
 {
   public:

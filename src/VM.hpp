@@ -2,6 +2,8 @@
 #include "Parsing/Lexer.hpp"
 #include "Parsing/Parser.hpp"
 
+// Contains the entire VM environment and handles its execution
+// Returns output and debug info, or throw a VMException in any invalid state
 class VM
 {
   private:

@@ -29,8 +29,10 @@ typedef void ( Operation::*OperationMethod )( Stack& stack );
 
 typedef std::pair<std::string, std::string> OpOutput;
 
+// All info pertaining to an operator
 struct OperationInfo
 {
+	// Coplien's form necessary definitions
 	OperationInfo();
 	OperationInfo( eOperationType type, std::string name, std::string representation,
 		bool takes_value, int required_operands, OperationMethod method );
@@ -46,6 +48,7 @@ struct OperationInfo
 	OperationMethod method;
 };
 
+// Represents a single line of an AVM instruction, its execution, and its output
 class Operation
 {
   private:
