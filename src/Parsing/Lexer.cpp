@@ -19,7 +19,7 @@ OperationToken::OperationToken( const OperationToken& cpy ) = default;
 OperationToken& OperationToken::operator=( const OperationToken& rhs ) = default;
 OperationToken::~OperationToken() = default;
 
-bool Lexer::readLine( std::string& line, OperationToken* token )
+bool Lexer::readLine( std::string& line, OperationToken& token )
 {
 	char operatorName[ 30 ];
 	char operandData[ 30 ];
@@ -51,25 +51,25 @@ bool Lexer::readLine( std::string& line, OperationToken* token )
 	// Fill Token
 
 	// Check for remaining characters
-	token->unexpectedChars = -1;
+	token.unexpectedChars = -1;
 	size_t i = readChars;
 	while ( line[ i ] && line[ i ] != ';' )
 	{
 		if ( line[ i ] != ' ' )
 		{
-			token->unexpectedChars = i;
+			token.unexpectedChars = i;
 			break;
 		}
 		i++;
 	}
 
-	token->operatorName = std::string( operatorName );
-	token->hasValue = hasValue;
+	token.operatorName = std::string( operatorName );
+	token.hasValue = hasValue;
 
 	if ( hasValue )
 	{
-		token->operandType = std::string( operandType );
-		token->operandData = std::string( operandData );
+		token.operandType = std::string( operandType );
+		token.operandData = std::string( operandData );
 	}
 	return true;
 }

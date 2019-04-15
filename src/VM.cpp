@@ -38,7 +38,7 @@ OpOutput VM::runLine( std::string& line )
 	OperationToken token;
 	OpOutput output;
 
-	bool success = _lexer.readLine( line, &token );
+	bool success = _lexer.readLine( line, token );
 
 	if ( success )
 	{

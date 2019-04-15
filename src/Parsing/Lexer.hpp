@@ -19,5 +19,5 @@ struct OperationToken
 class Lexer
 {
   public:
-	bool readLine( std::string& line, OperationToken* out );
+	bool readLine( std::string& line, OperationToken& out );
 };
