@@ -16,25 +16,27 @@ const std::string RED = "\e[1;31m";
 const std::string RESET = "\e[0;0m";
 const std::string ENDL = RESET + "\n";
 
-void run( const std::string& file, std::istream& f, bool write, bool debug )
+
+// Handle VM launch and return values, display any relevant info
+void run( bool standard_input, std::istream& stream, bool write, bool debug )
 {
 	std::string line;
 	VM vm;
 	size_t line_num = 0;
 
-	std::cout << WHITE << "\n--- <" << file << "> ---\n" << ENDL;
-
-	while ( std::getline( f, line ) )
+	while ( std::getline( stream, line ) )
 	{
 		line_num++;
 
 		std::string op_string;
+		// Display read line
 		if ( write )
 		{
 			std::cout << PURPLE << std::setw( 4 ) << line_num << ": " << DARK_GRAY << line << ENDL;
 		}
 		try
 		{
+			// Run instruction, and get display and debug output
 			auto [ output_str, debug_str ] = vm.run_line( line );
 			if ( debug && debug_str.size() )
 			{
@@ -45,10 +47,12 @@ void run( const std::string& file, std::istream& f, bool write, bool debug )
 		}
 		catch ( VMException& e )
 		{
+			// Display any expected error
 			std::cerr << RED << std::setw( 4 ) << line_num << ": " << e.toString() << ENDL;
 		}
 
-		if ( line.find( ";;" ) != std::string::npos )
+		// Quit if received standard input EOF symbol
+		if ( standard_input && line.find( ";;" ) != std::string::npos )
 			break;
 	}
 	try
@@ -68,6 +72,8 @@ int main( int argc, char** argv )
 	bool debug = false;
 	std::vector<std::string> files;
 
+	// Setup Argument Helper
+
 	ah.set_name( "Abstract-VM" );
 	ah.set_description(
 		"A simple interpreter for an assembly language with arbitrary arithmetics" );
@@ -81,18 +87,22 @@ int main( int argc, char** argv )
 
 	ah.process( argc, argv );
 
+	// Open files or standard input, and start vm
+
 	if ( files.size() == 0 )
 	{
-		run( "cin", std::cin, write, debug );
+		run( true, std::cin, write, debug );
 	}
 	for ( auto file : files )
 	{
 		std::ifstream f;
 		f.open( file );
 
+		std::cout << WHITE << "\n--- <" << file << "> ---\n" << ENDL;
+
 		if ( f.is_open() == false )
 			std::cerr << RED << "Error: Could not open file: " << file << std::endl;
 		else
-			run( file, f, write, debug );
+			run( false, f, write, debug );
 	}
 }
