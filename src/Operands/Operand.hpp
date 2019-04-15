@@ -8,7 +8,23 @@
 #include <sstream>
 #include <string>
 
-template <typename T> class Operand : public IOperand
+// Implements all operations on the logical level
+class AOperand : public virtual IOperand
+{
+  public:
+	int getMaxPrecision( IOperand const& rhs ) const;
+	IOperand const* operator+( IOperand const& rhs ) const;
+	IOperand const* operator-( IOperand const& rhs ) const;
+	IOperand const* operator*( IOperand const& rhs ) const;
+	IOperand const* operator/( IOperand const& rhs ) const;
+	IOperand const* operator%( IOperand const& rhs ) const;
+	bool operator==( IOperand const& rhs ) const;
+	bool operator!=( IOperand const& rhs ) const;
+};
+
+// The type specific implementation of IOperand
+// Handles type directly
+template <typename T> class Operand : public AOperand
 {
 
   private:
@@ -17,6 +33,7 @@ template <typename T> class Operand : public IOperand
 	std::string representation;
 
   public:
+	// Coplien's form basic definitions
 	Operand( T value )
 		: value( value )
 	{
@@ -31,14 +48,10 @@ template <typename T> class Operand : public IOperand
 	Operand& operator=( const Operand& rhs ) = default;
 	~Operand() = default;
 
+	// Various utility functions
 	const IOperand* clone() const { return new Operand( *this ); }
 
 	int getPrecision( void ) const { return static_cast<int>( type ); }
-
-	int getMaxPrecision( IOperand const& rhs ) const
-	{
-		return std::max( this->getPrecision(), rhs.getPrecision() );
-	}
 
 	eOperandType getType( void ) const { return type; }
 
@@ -46,101 +59,13 @@ template <typename T> class Operand : public IOperand
 
 	bool isZero( void ) const { return value == 0; }
 
-	IOperand const* operator+( IOperand const& rhs ) const
-	{
-		int precision = this->getMaxPrecision( rhs );
-		switch ( precision )
-		{
-		case e_ty_i8: return new Operand<safe_int8>( this->asI8() + rhs.asI8() );
-		case e_ty_i16: return new Operand<safe_int16>( this->asI16() + rhs.asI16() );
-		case e_ty_i32: return new Operand<safe_int32>( this->asI32() + rhs.asI32() );
-		case e_ty_f32: return new Operand<float>( this->asF32() + rhs.asF32() );
-		case e_ty_f64: return new Operand<double>( this->asF64() + rhs.asF64() );
-		case e_ty_f80: return new Operand<long double>( this->asF80() + rhs.asF80() );
-		}
-		throw CorruptOperandException();
-	}
-
-	IOperand const* operator-( IOperand const& rhs ) const
-	{
-		int precision = this->getMaxPrecision( rhs );
-		switch ( precision )
-		{
-		case e_ty_i8: return new Operand<safe_int8>( this->asI8() - rhs.asI8() );
-		case e_ty_i16: return new Operand<safe_int16>( this->asI16() - rhs.asI16() );
-		case e_ty_i32: return new Operand<safe_int32>( this->asI32() - rhs.asI32() );
-		case e_ty_f32: return new Operand<float>( this->asF32() - rhs.asF32() );
-		case e_ty_f64: return new Operand<double>( this->asF64() - rhs.asF64() );
-		case e_ty_f80: return new Operand<long double>( this->asF80() - rhs.asF80() );
-		}
-		throw CorruptOperandException();
-	}
-
-	IOperand const* operator*( IOperand const& rhs ) const
-	{
-		int precision = this->getMaxPrecision( rhs );
-		switch ( precision )
-		{
-		case e_ty_i8: return new Operand<safe_int8>( this->asI8() * rhs.asI8() );
-		case e_ty_i16: return new Operand<safe_int16>( this->asI16() * rhs.asI16() );
-		case e_ty_i32: return new Operand<safe_int32>( this->asI32() * rhs.asI32() );
-		case e_ty_f32: return new Operand<float>( this->asF32() * rhs.asF32() );
-		case e_ty_f64: return new Operand<double>( this->asF64() * rhs.asF64() );
-		case e_ty_f80: return new Operand<long double>( this->asF80() * rhs.asF80() );
-		}
-		throw CorruptOperandException();
-	}
-
-	IOperand const* operator/( IOperand const& rhs ) const
-	{
-		int precision = this->getMaxPrecision( rhs );
-		switch ( precision )
-		{
-		case e_ty_i8: return new Operand<safe_int8>( this->asI8() / rhs.asI8() );
-		case e_ty_i16: return new Operand<safe_int16>( this->asI16() / rhs.asI16() );
-		case e_ty_i32: return new Operand<safe_int32>( this->asI32() / rhs.asI32() );
-		case e_ty_f32: return new Operand<float>( this->asF32() / rhs.asF32() );
-		case e_ty_f64: return new Operand<double>( this->asF64() / rhs.asF64() );
-		case e_ty_f80: return new Operand<long double>( this->asF80() / rhs.asF80() );
-		}
-		throw CorruptOperandException();
-	}
-
-	IOperand const* operator%( IOperand const& rhs ) const
-	{
-		int precision = this->getMaxPrecision( rhs );
-		switch ( precision )
-		{
-		case e_ty_i8: return new Operand<safe_int8>( this->asI8() % rhs.asI8() );
-		case e_ty_i16: return new Operand<safe_int16>( this->asI16() % rhs.asI16() );
-		case e_ty_i32: return new Operand<safe_int32>( this->asI32() % rhs.asI32() );
-		case e_ty_f32: return new Operand<float>( std::fmodf( this->asF32(), rhs.asF32() ) );
-		case e_ty_f64: return new Operand<double>( std::fmod( this->asF64(), rhs.asF64() ) );
-		case e_ty_f80: return new Operand<long double>( std::fmodl( this->asF80(), rhs.asF80() ) );
-		}
-		throw CorruptOperandException();
-	}
-
-	bool operator==( IOperand const& rhs ) const
-	{
-		int precision = this->getMaxPrecision( rhs );
-		switch ( precision )
-		{
-		case e_ty_i8: return this->asI8() == rhs.asI8();
-		case e_ty_i16: return this->asI16() == rhs.asI16();
-		case e_ty_i32: return this->asI32() == rhs.asI32();
-		case e_ty_f32: return this->asF32() == rhs.asF32();
-		case e_ty_f64: return this->asF64() == rhs.asF64();
-		case e_ty_f80: return this->asF80() == rhs.asF80();
-		}
-		throw CorruptOperandException();
-	}
-
 	bool operator!=( IOperand const& rhs ) const { return !( *this == rhs ); }
 
 	std::string const& toString( void ) const { return this->representation; }
 
   private:
+	// Casting functions
+
 	safe_int8 asI8() const { return static_cast<safe_int8>( this->value ); }
 
 	safe_int16 asI16() const { return static_cast<safe_int16>( this->value ); }
@@ -153,37 +78,10 @@ template <typename T> class Operand : public IOperand
 
 	double asF80() const { return static_cast<long double>( this->value ); }
 
-	static std::string to_representation( safe_int8 i )
-	{
-		return std::to_string( static_cast<int64_t>( i ) );
-	}
-	static std::string to_representation( safe_int16 i )
-	{
-		return std::to_string( static_cast<int64_t>( i ) );
-	}
-	static std::string to_representation( safe_int32 i )
-	{
-		return std::to_string( static_cast<int64_t>( i ) );
-	}
-	static std::string to_representation( float f )
-	{
-		int precision = std::numeric_limits<T>::max_digits10 - 2;
-		std::stringstream ss;
-		ss << std::setprecision( precision ) << f;
-		return ss.str();
-	}
-	static std::string to_representation( double f )
-	{
-		int precision = std::numeric_limits<T>::max_digits10 - 2;
-		std::stringstream ss;
-		ss << std::setprecision( precision ) << f;
-		return ss.str();
-	}
-	static std::string to_representation( long double f )
-	{
-		int precision = std::numeric_limits<T>::max_digits10 - 2;
-		std::stringstream ss;
-		ss << std::setprecision( precision ) << f;
-		return ss.str();
-	}
+	static std::string to_representation( safe_int8 i );
+	static std::string to_representation( safe_int16 i );
+	static std::string to_representation( safe_int32 i );
+	static std::string to_representation( float f );
+	static std::string to_representation( double f );
+	static std::string to_representation( long double f );
 };

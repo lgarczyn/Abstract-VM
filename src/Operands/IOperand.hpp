@@ -31,6 +31,7 @@ struct OperandInfo
 	std::string name;
 };
 
+// Represents a value of abritrary precision
 class IOperand
 {
   public:
@@ -58,6 +59,7 @@ class IOperand
 	// String representation of the instance
 	virtual std::string const& toString( void ) const = 0;
 
+	// Cast to any of the underlying types
 	virtual safe_int8 asI8() const = 0;
 	virtual safe_int16 asI16() const = 0;
 	virtual safe_int32 asI32() const = 0;
