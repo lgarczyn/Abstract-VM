@@ -2,10 +2,8 @@
 #include "Libs/Argument_helper.hpp"
 #include "VM.hpp"
 
-#include <exception>
 #include <fstream>
 #include <iomanip>
-#include <iostream>
 
 const std::string WHITE = "\e[1;37m";
 const std::string GRAY = "\e[0;37m";

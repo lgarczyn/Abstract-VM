@@ -4,7 +4,6 @@
 #include "Operations/Operation.hpp"
 
 #include <cstdio>
-#include <cstring>
 
 OperationToken::OperationToken()
 	: operatorName()
