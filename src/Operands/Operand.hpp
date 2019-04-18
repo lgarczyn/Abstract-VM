@@ -29,13 +29,13 @@ template <typename T> class Operand : public AOperand
 
   private:
 	static const eOperandType type;
-	T value;
+	T _value;
 	std::string representation;
 
   public:
 	// Coplien's form basic definitions
 	Operand( T value )
-		: value( value )
+		: _value( value )
 	{
 		representation = toRepresentation( value );
 	}
@@ -57,7 +57,7 @@ template <typename T> class Operand : public AOperand
 
 	const std::string& getTypeName( void ) const { return IOperand::operands[ type ].name; }
 
-	bool isZero( void ) const { return value == 0; }
+	bool isZero( void ) const { return _value == 0; }
 
 	bool operator!=( IOperand const& rhs ) const { return !( *this == rhs ); }
 
@@ -66,22 +66,17 @@ template <typename T> class Operand : public AOperand
   private:
 	// Casting functions
 
-	safe_int8 asI8() const { return static_cast<safe_int8>( this->value ); }
+	safe_int8 asI8() const { return static_cast<safe_int8>( this->_value ); }
 
-	safe_int16 asI16() const { return static_cast<safe_int16>( this->value ); }
+	safe_int16 asI16() const { return static_cast<safe_int16>( this->_value ); }
 
-	safe_int32 asI32() const { return static_cast<safe_int32>( this->value ); }
+	safe_int32 asI32() const { return static_cast<safe_int32>( this->_value ); }
 
-	float asF32() const { return static_cast<float>( this->value ); }
+	float asF32() const { return static_cast<float>( this->_value ); }
 
-	double asF64() const { return static_cast<double>( this->value ); }
+	double asF64() const { return static_cast<double>( this->_value ); }
 
-	double asF80() const { return static_cast<long double>( this->value ); }
+	double asF80() const { return static_cast<long double>( this->_value ); }
 
-	static std::string toRepresentation( safe_int8 i );
-	static std::string toRepresentation( safe_int16 i );
-	static std::string toRepresentation( safe_int32 i );
-	static std::string toRepresentation( float f );
-	static std::string toRepresentation( double f );
-	static std::string toRepresentation( long double f );
+	static std::string toRepresentation( T i );
 };
