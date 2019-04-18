@@ -79,7 +79,7 @@ UnexpectedCharactersException::UnexpectedCharactersException( const std::string&
 	: VMException()
 {
 	this->_msg
-		= "Could not parse: \"" + line.substr( 0, pos ) + "\e[4m" + line.substr( pos ) + "\e[0m\"";
+		= "Could not parse: \"" + line.substr( 0, pos ) + "\e[4m" + line.substr( pos ) + "\e[24m\"";
 }
 
 UnknownOperationException::UnknownOperationException( const std::string& operation )
