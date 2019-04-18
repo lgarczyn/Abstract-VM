@@ -108,7 +108,7 @@ OpOutput Operation::run( Stack& stack )
 	{
 		( this->*( info.method ) )( stack );
 	}
-	catch ( SafeIntException& e )
+	catch ( std::exception& e )
 	{
 		throw OverflowException( this->_operation );
 	}
@@ -264,11 +264,10 @@ void Operation::opPrint( Stack& stack )
 {
 	const IOperand* highest = stack.back();
 
-	if ( highest->getType() != TypeI8 )
-		throw ForbiddenPrintException( highest->getTypeName() );
+	char c = highest->toChar();
 
 	this->_output = "   | ";
-	this->_output.push_back( highest->asI8() );
+	this->_output.push_back( c );
 	this->_output.push_back( '\n' );
 }
 

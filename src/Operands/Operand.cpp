@@ -5,6 +5,9 @@
 
 #include "Operand.hpp"
 
+#include <iomanip>
+#include <sstream>
+
 // IOperand parsing table info
 
 const OperandInfo IOperand::operands[ OPERAND_TYPE_NUM ] = {
@@ -41,8 +44,9 @@ int AOperand::getMaxPrecision( IOperand const& rhs ) const
 	return std::max( this->getPrecision(), rhs.getPrecision() );
 }
 
-IOperand const* AOperand::operator+( IOperand const& rhs ) const
+IOperand const* AOperand::operator+( IOperand const& i_rhs ) const
 {
+	auto& rhs = dynamic_cast<const AOperand&>( i_rhs );
 	int precision = this->getMaxPrecision( rhs );
 	switch ( precision )
 	{
@@ -56,8 +60,9 @@ IOperand const* AOperand::operator+( IOperand const& rhs ) const
 	throw CorruptOperandException();
 }
 
-IOperand const* AOperand::operator-( IOperand const& rhs ) const
+IOperand const* AOperand::operator-( IOperand const& i_rhs ) const
 {
+	auto& rhs = dynamic_cast<const AOperand&>( i_rhs );
 	int precision = this->getMaxPrecision( rhs );
 	switch ( precision )
 	{
@@ -71,8 +76,9 @@ IOperand const* AOperand::operator-( IOperand const& rhs ) const
 	throw CorruptOperandException();
 }
 
-IOperand const* AOperand::operator*( IOperand const& rhs ) const
+IOperand const* AOperand::operator*( IOperand const& i_rhs ) const
 {
+	auto& rhs = dynamic_cast<const AOperand&>( i_rhs );
 	int precision = this->getMaxPrecision( rhs );
 	switch ( precision )
 	{
@@ -86,8 +92,9 @@ IOperand const* AOperand::operator*( IOperand const& rhs ) const
 	throw CorruptOperandException();
 }
 
-IOperand const* AOperand::operator/( IOperand const& rhs ) const
+IOperand const* AOperand::operator/( IOperand const& i_rhs ) const
 {
+	auto& rhs = dynamic_cast<const AOperand&>( i_rhs );
 	int precision = this->getMaxPrecision( rhs );
 	switch ( precision )
 	{
@@ -101,8 +108,9 @@ IOperand const* AOperand::operator/( IOperand const& rhs ) const
 	throw CorruptOperandException();
 }
 
-IOperand const* AOperand::operator%( IOperand const& rhs ) const
+IOperand const* AOperand::operator%( IOperand const& i_rhs ) const
 {
+	auto& rhs = dynamic_cast<const AOperand&>( i_rhs );
 	int precision = this->getMaxPrecision( rhs );
 	switch ( precision )
 	{
@@ -116,8 +124,9 @@ IOperand const* AOperand::operator%( IOperand const& rhs ) const
 	throw CorruptOperandException();
 }
 
-bool AOperand::operator==( IOperand const& rhs ) const
+bool AOperand::operator==( IOperand const& i_rhs ) const
 {
+	auto& rhs = dynamic_cast<const AOperand&>( i_rhs );
 	int precision = this->getMaxPrecision( rhs );
 	switch ( precision )
 	{

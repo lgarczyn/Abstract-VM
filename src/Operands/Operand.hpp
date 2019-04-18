@@ -1,18 +1,22 @@
 #pragma once
 #include "Exceptions/VMException.hpp"
 #include "IOperand.hpp"
+#include "Libs/SafeInt.hpp"
 
-#include <cmath>
-#include <iomanip>
-#include <iostream>
-#include <sstream>
 #include <string>
+
+typedef SafeInt<int8_t> safe_int8;
+typedef SafeInt<int16_t> safe_int16;
+typedef SafeInt<int32_t> safe_int32;
 
 // Implements all operations on the logical level
 class AOperand : public virtual IOperand
 {
   public:
+	// Utility
 	int getMaxPrecision( IOperand const& rhs ) const;
+
+	// Operations
 	IOperand const* operator+( IOperand const& rhs ) const;
 	IOperand const* operator-( IOperand const& rhs ) const;
 	IOperand const* operator*( IOperand const& rhs ) const;
@@ -20,6 +24,15 @@ class AOperand : public virtual IOperand
 	IOperand const* operator%( IOperand const& rhs ) const;
 	bool operator==( IOperand const& rhs ) const;
 	bool operator!=( IOperand const& rhs ) const;
+
+	// Cast to any of the underlying types
+	virtual safe_int8 asI8() const = 0;
+	virtual safe_int16 asI16() const = 0;
+	virtual safe_int32 asI32() const = 0;
+	virtual float asF32() const = 0;
+	virtual double asF64() const = 0;
+	virtual double asF80() const = 0;
+	virtual bool isZero() const = 0;
 };
 
 // The type specific implementation of IOperand
@@ -30,14 +43,14 @@ template <typename T> class Operand : public AOperand
   private:
 	static const eOperandType type;
 	T _value;
-	std::string representation;
+	std::string _representation;
 
   public:
 	// Coplien's form basic definitions
 	Operand( T value )
 		: _value( value )
 	{
-		representation = toRepresentation( value );
+		_representation = toRepresentation( value );
 	}
 
 	Operand()
@@ -61,7 +74,14 @@ template <typename T> class Operand : public AOperand
 
 	bool operator!=( IOperand const& rhs ) const { return !( *this == rhs ); }
 
-	std::string const& toString( void ) const { return this->representation; }
+	std::string const& toString( void ) const { return this->_representation; }
+
+	char toChar( void ) const
+	{
+		if ( type == TypeI8 )
+			return _value;
+		throw ForbiddenPrintException( this->getTypeName() );
+	}
 
   private:
 	// Casting functions

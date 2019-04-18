@@ -41,9 +41,7 @@ Operation Parser::getOperation( OperationToken token )
 		}
 		if ( i == OPERAND_TYPE_NUM )
 			throw UnknownOperandException( token.operandType );
-
 		operand = createOperand( operandType, token.operandData );
 	}
-
 	return Operation( operationType, operand );
 }

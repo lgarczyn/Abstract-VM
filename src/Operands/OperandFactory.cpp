@@ -3,7 +3,7 @@
 #include "Exceptions/VMException.hpp"
 #include "Operand.hpp"
 
-#include <fstream>
+#include <sstream>
 
 const OperandConstructor OperandFactory::constructors[ OPERAND_TYPE_NUM ] = {
 	&OperandFactory::createInt8,
