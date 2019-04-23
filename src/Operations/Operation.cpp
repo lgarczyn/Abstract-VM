@@ -1,6 +1,7 @@
 #include "Operation.hpp"
 
 #include "Exceptions/VMException.hpp"
+#include "Libs/SafeInt.hpp"
 
 #include <sstream>
 
@@ -108,7 +109,7 @@ OpOutput Operation::run( Stack& stack )
 	{
 		( this->*( info.method ) )( stack );
 	}
-	catch ( std::exception& e )
+	catch ( SafeIntException& e )
 	{
 		throw OverflowException( this->_operation );
 	}
