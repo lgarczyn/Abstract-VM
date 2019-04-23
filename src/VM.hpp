@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Parsing/Lexer.hpp"
 #include "Parsing/Parser.hpp"
 
