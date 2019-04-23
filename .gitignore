@@ -1,6 +1,5 @@
 .vscode
 .DS_Store
 *.o
-*.gch
 obj
 abstract-vm

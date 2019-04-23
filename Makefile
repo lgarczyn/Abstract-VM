@@ -12,12 +12,13 @@
 
 NAME = abstract-vm
 
-SRCS_PATH = ./src/
+SRC_PATH = ./src/
 OBJ_PATH  = ./obj/
+INCLUDES = -I $(SRC_PATH) -I $(OBJ_PATH)
 
-FLAGS = -Wall -Wextra -Werror -std=c++1z -O2 -I src
+FLAGS = -Wall -Wextra -Werror -std=c++1z -O2 $(INCLUDES)
 
-SRCS_NAME = main.cpp \
+SRC_NAMES = main.cpp \
 			VM.cpp \
 			Exceptions/VMException.cpp \
 			Operands/Operand.cpp \
@@ -26,34 +27,41 @@ SRCS_NAME = main.cpp \
 			Parsing/Lexer.cpp \
 			Parsing/Parser.cpp \
 
-HEADERS_NAME = \
-		Exceptions/VMException.hpp \
-		Operands/IOperand.hpp \
-		Operands/Operand.hpp \
-		Operands/OperandFactory.hpp \
-		Operations/Operation.hpp \
-		Parsing/Lexer.hpp \
-		Parsing/Parser.hpp \
+HEADER_NAMES = \
+			Libs/Argument_helper.hpp \
+			Libs/SafeInt.hpp \
+			Exceptions/VMException.hpp \
+			Operands/IOperand.hpp \
+			Operands/Operand.hpp \
+			Operands/OperandFactory.hpp \
+			Operations/Operation.hpp \
+			Parsing/Lexer.hpp \
+			Parsing/Parser.hpp \
+			VM.hpp
 
-SRCS = $(addprefix $(SRCS_PATH), $(SRCS_NAME))
-OBJ = $(addprefix $(OBJ_PATH), $(SRCS_NAME:.cpp=.o))
-HEADERS = $(addprefix $(SRCS_PATH), $(HEADERS_NAME))
+SRCS = $(addprefix $(SRC_PATH), $(SRC_NAMES))
+HEADERS = $(addprefix $(SRC_PATH), $(HEADER_NAMES))
 
-all: $(NAME)
+OBJ =  $(addprefix $(OBJ_PATH), $(SRC_NAMES:.cpp=.o))
 
-$(NAME): $(OBJ) $(HEADERS)
-	@g++ $(FLAGS) $(OBJ) -o $(NAME)
+all:
+	$(MAKE) -j8 $(NAME)
 
-$(OBJ_PATH)%.o: $(SRCS_PATH)%.cpp $(HEADERS)
-	@mkdir -p `dirname $@`
-	@g++ -c $(FLAGS) $< -o $@
+$(NAME): $(OBJ)
+	g++ $(FLAGS) $(OBJ) -o $(NAME)
+
+$(OBJ_PATH)%.o: $(SRC_PATH)%.cpp $(HEADERS)
+	mkdir -p `dirname $@`
+	g++ -c $(FLAGS) $< -o $@
 
 clean:
-	@/bin/rm -rf $(OBJ_PATH)
+	/bin/rm -rf $(OBJ_PATH)
 
 fclean: clean
-	@/bin/rm -rf $(NAME)
+	/bin/rm -rf $(NAME)
 
-re: fclean all
+re:
+	$(MAKE) fclean
+	$(MAKE) all
 
 .PHONY: all, clean, fclean, re
