@@ -15,7 +15,7 @@ const OperandConstructor OperandFactory::constructors[ OPERAND_TYPE_NUM ] = {
 };
 
 
-template <typename T> T create( std::string const& value, std::string const& type )
+template <typename T> T create( eOperandType type, std::string const& value )
 {
 	T out = 0;
 	auto ss = std::stringstream( value );
@@ -24,11 +24,11 @@ template <typename T> T create( std::string const& value, std::string const& typ
 
 	if ( std::isfinite( out ) == false )
 	{
-		throw LargeFloatingPointException( value, type );
+		throw LargeFloatingPointException( value, IOperand::operands[ type ].name );
 	}
 	if ( ss.fail() )
 	{
-		throw LargeIntegerException( value, type );
+		throw LargeIntegerException( value, IOperand::operands[ type ].name );
 	}
 	if ( ss.eof() != true )
 	{
@@ -46,36 +46,36 @@ IOperand const* OperandFactory::createOperand( eOperandType type, std::string co
 IOperand const* OperandFactory::createInt8( std::string const& value ) const
 {
 	// Getting character as int16 to avoid reading one ASCII value
-	int16_t parsed = create<int16_t>( value, "Int8" );
+	int16_t parsed = create<int16_t>( TypeI8, value );
 	int8_t out;
 	if ( SafeCast( parsed, out ) )
 	{
 		return new Operand<safe_int8>( safe_int8( out ) );
 	}
-	throw LargeIntegerException( value, "Int8" );
+	throw LargeIntegerException( value, IOperand::operands[ TypeI8 ].name );
 }
 
 IOperand const* OperandFactory::createInt16( std::string const& value ) const
 {
-	return new Operand<safe_int16>( safe_int16( create<int16_t>( value, "Int16" ) ) );
+	return new Operand<safe_int16>( safe_int16( create<int16_t>( TypeI16, value ) ) );
 }
 
 IOperand const* OperandFactory::createInt32( std::string const& value ) const
 {
-	return new Operand<safe_int32>( safe_int32( create<int32_t>( value, "Int32" ) ) );
+	return new Operand<safe_int32>( safe_int32( create<int32_t>( TypeI32, value ) ) );
 }
 
 IOperand const* OperandFactory::createFloat( std::string const& value ) const
 {
-	return new Operand<float>( create<float>( value, "float" ) );
+	return new Operand<float>( create<float>( TypeF32, value ) );
 }
 
 IOperand const* OperandFactory::createDouble( std::string const& value ) const
 {
-	return new Operand<double>( create<double>( value, "double" ) );
+	return new Operand<double>( create<double>( TypeF64, value ) );
 }
 
 IOperand const* OperandFactory::createLongDouble( std::string const& value ) const
 {
-	return new Operand<long double>( create<long double>( value, "ldouble" ) );
+	return new Operand<long double>( create<long double>( TypeF80, value ) );
 }
