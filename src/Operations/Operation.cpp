@@ -113,6 +113,10 @@ OpOutput Operation::run( Stack& stack )
 	{
 		throw OverflowException( this->_operation );
 	}
+	catch ( NakedOverflowException& e )
+	{
+		throw OverflowException( this->_operation );
+	}
 	if ( this->_result.size() )
 		_operation += " = " + std::move( this->_result );
 

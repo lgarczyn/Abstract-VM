@@ -47,11 +47,7 @@ template <typename T> class Operand : public AOperand
 
   public:
 	// Coplien's form basic definitions
-	Operand( T value )
-		: _value( value )
-	{
-		_representation = toRepresentation( value );
-	}
+	Operand( T value );
 
 	Operand()
 		: Operand( 0 )
@@ -100,3 +96,10 @@ template <typename T> class Operand : public AOperand
 
 	static std::string toRepresentation( T i );
 };
+
+template<> Operand<safe_int8>::Operand( safe_int8 value );
+template<> Operand<safe_int16>::Operand( safe_int16 value );
+template<> Operand<safe_int32>::Operand( safe_int32 value );
+template<> Operand<float>::Operand( float value );
+template<> Operand<double>::Operand( double value );
+template<> Operand<long double>::Operand( long double value );

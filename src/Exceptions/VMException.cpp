@@ -51,6 +51,12 @@ OverflowException::OverflowException( const std::string& op )
 	this->_msg = "Overflow in " + op;
 }
 
+NakedOverflowException::NakedOverflowException()
+	: VMException()
+{
+	this->_msg = "Attempted to build a float using a non-finite value";
+}
+
 FailedAssertException::FailedAssertException( const std::string& op )
 	: VMException()
 {

@@ -168,26 +168,44 @@ template <> std::string Operand<safe_int32>::toRepresentation( safe_int32 i )
 	return std::to_string( static_cast<int32_t>( i ) );
 }
 
-template <> std::string Operand<float>::toRepresentation( float f )
+template <typename T> std::string Operand<T>::toRepresentation( T f )
 {
-	int precision = std::numeric_limits<float>::max_digits10 - 2;
+	int precision = std::numeric_limits<T>::max_digits10 - 2;
 	std::stringstream ss;
 	ss << std::setprecision( precision ) << f;
 	return ss.str();
 }
 
-template <> std::string Operand<double>::toRepresentation( double f )
+template <> Operand<safe_int8>::Operand( safe_int8 value ) : _value( value )
 {
-	int precision = std::numeric_limits<double>::max_digits10 - 2;
-	std::stringstream ss;
-	ss << std::setprecision( precision ) << f;
-	return ss.str();
+	_representation = toRepresentation( value );
+}
+template <> Operand<safe_int16>::Operand( safe_int16 value ) : _value( value )
+{
+	_representation = toRepresentation( value );
+}
+template <> Operand<safe_int32>::Operand( safe_int32 value ) : _value( value )
+{
+	_representation = toRepresentation( value );
 }
 
-template <> std::string Operand<long double>::toRepresentation( long double f )
+template <> Operand<float>::Operand( float value ) : _value( value )
 {
-	int precision = std::numeric_limits<long double>::max_digits10 - 2;
-	std::stringstream ss;
-	ss << std::setprecision( precision ) << f;
-	return ss.str();
+	if (std::isfinite(value) == false)
+		throw NakedOverflowException();
+	_representation = toRepresentation( value );
+}
+
+template <> Operand<double>::Operand( double value ) : _value( value )
+{
+	if (std::isfinite(value) == false)
+		throw NakedOverflowException();
+	_representation = toRepresentation( value );
+}
+
+template <> Operand<long double>::Operand( long double value ) : _value( value )
+{
+	if (std::isfinite(value) == false)
+		throw NakedOverflowException();
+	_representation = toRepresentation( value );
 }

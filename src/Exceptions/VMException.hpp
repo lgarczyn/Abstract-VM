@@ -38,6 +38,11 @@ struct OverflowException : VMException
 	OverflowException( const std::string& op );
 };
 
+struct NakedOverflowException : VMException
+{
+	NakedOverflowException();
+};
+
 struct FailedAssertException : VMException
 {
 	FailedAssertException( const std::string& op );
