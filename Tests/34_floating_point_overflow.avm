@@ -1,0 +1,15 @@
+; --------------------------------
+; 34_floating_point_overflow.avm -
+; --------------------------------
+
+push float(1E+20)
+dup
+mul
+push double(1E+200)
+dup
+mul
+push ldouble(1E+2000)
+dup
+mul
+
+exit
